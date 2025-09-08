@@ -38,6 +38,7 @@
                         <li><a href="#results" class="nav-link">Results</a></li>
                         <li><a href="#process" class="nav-link">Process</a></li>
                         <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                        <li><a href="#home" class="nav-link" id="nav-roi">ROI Estimator</a></li>
                         <li><a href="#contact" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
@@ -56,7 +57,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="hero">
+    <section id="home" class="hero">
         <div class="hero-background">
             <div class="orb orb-1"></div>
             <div class="orb orb-2"></div>
@@ -67,36 +68,118 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title reveal">
-                        Scale faster. <span class="gradient-text">Work smarter.</span> Let AI do the heavy lifting.
+                    <h1 class="hero-headline reveal">
+                        Scale faster. <br class="work-br"><span class="highlight-blue">Work smarter.</span> <br class="mobile-br">Let AI do the heavy lifting.
                     </h1>
-                    <p class="hero-subtitle reveal">
-                        We build AI automations that capture more leads, close more deals, and free your team from repetitive work.
+                    <p class="hero-subheadline reveal">
+                        AIAnchor installs AI reception & process automation to answer every lead instantly, eliminate busywork, and recover lost revenue—fast.
                     </p>
                     <div class="hero-ctas reveal">
-                        <button class="btn btn-primary btn-lg" onclick="scrollToContact()">
+                        <button class="cta-button hero-cta" onclick="scrollToContact()">
                             <i class="fas fa-calendar-check"></i>
                             Book Free Strategy Call
                         </button>
-                        <button class="btn btn-outline btn-lg" onclick="scrollToResults()">
-                            <i class="fas fa-chart-line"></i>
-                            See Results
+                        <button class="cta-button hero-cta" id="roi-open" type="button">
+                            <i class="fas fa-calculator"></i>
+                            Estimate my ROI
                         </button>
                     </div>
-                    <div class="trust-bar reveal">
-                        <span class="trust-label">Trusted by:</span>
-                        <div class="trust-logos">
-                            <span class="trust-logo">Codename X</span>
-                            <span class="trust-logo">Temper</span>
-                            <span class="trust-logo">Hearth & Haven</span>
-                            <span class="trust-logo">TechFlow</span>
-                        </div>
-                    </div>
+                    <p class="hero-trust-note reveal">Typical clients see $10k+/mo in recovered revenue for ~ $1k/mo.</p>
                 </div>
                 <div class="hero-image reveal">
                     <div class="hero-card">
                         <img src="AIAnchor.jpg" alt="AIAnchor team working on AI automation solutions" loading="eager">
                     </div>
+                </div>
+            </div>
+
+            <!-- ROI Popover (hidden by default) -->
+            <div class="roi-pop" id="roi-pop" aria-hidden="true">
+                <div class="roi-pop__header">
+                    <strong>Quick ROI estimate</strong>
+                    <button class="roi-pop__close" id="roi-close" aria-label="Close">×</button>
+                </div>
+
+                <div class="roi-pop__row">
+                    <label>
+                        <span>Niche</span>
+                        <select id="roi-niche">
+                            <option value="real_estate">Real Estate Agency</option>
+                            <option value="dental">Dental Clinic</option>
+                            <option value="clinic_medspa">Clinic / MedSpa</option>
+                            <option value="auto_repair">Auto Repair</option>
+                            <option value="home_services">Home Services</option>
+                            <option value="fitness">Fitness / Gym</option>
+                            <option value="legal">Legal Services</option>
+                            <option value="restaurant">Restaurant</option>
+                            <option value="ecommerce">E-commerce</option>
+                            <option value="saas">SaaS / B2B</option>
+                            <option value="education">Education / Coaching</option>
+                            <option value="hospitality">Hospitality / Hotels</option>
+                            <option value="beauty">Beauty / Salon</option>
+                            <option value="veterinary">Veterinary</option>
+                        </select>
+                    </label>
+                    <div class="roi-input-group">
+                        <label class="roi-pop__range">
+                            <span>Leads / month</span>
+                            <input type="range" id="roi-leads" min="10" max="1000" step="10" value="100">
+                            <em id="roi-leads-val">100</em>
+                        </label>
+                        <label class="roi-number-input">
+                            <span>Or enter manually:</span>
+                            <input type="number" id="roi-leads-num" min="10" max="1000" step="10" value="100" inputmode="numeric">
+                        </label>
+                    </div>
+                    <div class="roi-input-group">
+                        <label class="roi-pop__range">
+                            <span>Avg € / sale</span>
+                            <input type="range" id="roi-rev" min="50" max="5000" step="50" value="500">
+                            <em id="roi-rev-val">€500</em>
+                        </label>
+                        <label class="roi-number-input">
+                            <span>Or enter manually:</span>
+                            <input type="number" id="roi-rev-num" min="50" max="5000" step="50" value="500" inputmode="numeric">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="roi-pop__row">
+                    <div class="roi-input-group">
+                        <label class="roi-pop__range">
+                            <span>Missed leads (%)</span>
+                            <input type="range" id="roi-miss" min="0" max="60" step="1" value="15">
+                            <em id="roi-miss-val">15%</em>
+                        </label>
+                        <label class="roi-number-input">
+                            <span>Or enter manually:</span>
+                            <input type="number" id="roi-miss-num" min="0" max="60" step="1" value="15" inputmode="numeric">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="roi-pop__result">
+                    <span>Est. monthly revenue recovered:</span>
+                    <strong id="roi-number">€0</strong>
+                    <button class="roi-adv-btn" id="roi-adv-toggle" type="button" aria-expanded="false">
+                        <i class="fas fa-cog"></i>
+                        Advanced
+                    </button>
+                </div>
+
+                <div class="roi-pop__adv" id="roi-advanced" hidden>
+                    <div class="roi-adv-content">
+                        <label class="roi-pop__range">
+                            <span>Close rate (%)</span>
+                            <input type="range" id="roi-close-slider" min="1" max="100" step="1" value="20">
+                            <em id="roi-close-val">20%</em>
+                        </label>
+                        <label class="roi-close-input">
+                            <span>Or enter manually:</span>
+                            <input type="number" id="roi-close" min="1" max="100" step="1" value="20" inputmode="numeric">
+                        </label>
+                    </div>
+                    <small class="roi-pop__hint">Defaults come from your niche. Edit anytime.</small>
                 </div>
             </div>
         </div>
@@ -108,6 +191,18 @@
                 <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
                 <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
             </svg>
+        </div>
+    </section>
+
+    <!-- Trustbar Section -->
+    <section class="trustbar">
+        <div class="container trustbar-container">
+            <span class="trustbar-label">Trusted by growth-focused teams</span>
+            <div class="trustbar-logos">
+                <div class="trust-logo">Codename X</div>
+                <div class="trust-logo">TemperOfficial</div>
+                <div class="trust-logo">Hearth&Haven</div>
+            </div>
         </div>
     </section>
 
@@ -125,7 +220,7 @@
                         <i class="fas fa-search"></i>
                     </div>
                     <h3>Analyze</h3>
-                    <p>We dive deep into your current processes to identify automation opportunities that will drive the biggest impact.</p>
+                    <p>Rapid audit uncovers missed leads, slow handoffs, and repetitive tasks bleeding time and money.</p>
                     <ul class="service-features">
                         <li>Process mapping & analysis</li>
                         <li>ROI opportunity assessment</li>
@@ -138,7 +233,7 @@
                         <i class="fas fa-robot"></i>
                     </div>
                     <h3>Automate</h3>
-                    <p>We build custom AI automations that seamlessly integrate with your existing tools and workflows.</p>
+                    <p>Deploy AI reception, scheduling, follow-ups, and admin automations within 24–72 hours—secure & GDPR-compliant.</p>
                     <ul class="service-features">
                         <li>Custom AI bot development</li>
                         <li>API integrations & webhooks</li>
@@ -151,7 +246,7 @@
                         <i class="fas fa-rocket"></i>
                     </div>
                     <h3>Scale</h3>
-                    <p>We help you scale your automations across your organization and continuously optimize for better results.</p>
+                    <p>Pipeline visibility, real-time dashboards, and compounding efficiency that frees your team to sell.</p>
                     <ul class="service-features">
                         <li>Team training & onboarding</li>
                         <li>Performance monitoring</li>
@@ -161,6 +256,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Results Section -->
     <section class="results" id="results">
@@ -252,9 +348,13 @@
                     <div class="testimonial-content">
                         <p>"I tried a marketing agency for the first time ever with you guys and was expecting so much less... you put in the time to do great work and maintain a great relationship."</p>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>Codename X</h4>
+                    <div class="testimonial-footer">
+                        <div class="testimonial-user">
+                            <div class="avatar-circle" aria-hidden="true"></div>
+                            <div>
+                                <div class="business-name">Codename X</div>
+                                <div class="business-role">Verified Client</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -263,9 +363,13 @@
                     <div class="testimonial-content">
                         <p>"You've been amazing to work with — appreciate the effort you put into helping my brand."</p>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>TemperOfficial</h4>
+                    <div class="testimonial-footer">
+                        <div class="testimonial-user">
+                            <div class="avatar-circle" aria-hidden="true"></div>
+                            <div>
+                                <div class="business-name">TemperOfficial</div>
+                                <div class="business-role">Verified Client</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -274,15 +378,20 @@
                     <div class="testimonial-content">
                         <p>"Seamless and enjoyable. Knowledgeable, friendly, and responsive. I feel valued as a client."</p>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-info">
-                            <h4>Hearth & Haven</h4>
+                    <div class="testimonial-footer">
+                        <div class="testimonial-user">
+                            <div class="avatar-circle" aria-hidden="true"></div>
+                            <div>
+                                <div class="business-name">Hearth & Haven</div>
+                                <div class="business-role">Verified Client</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- CTA Band -->
     <section class="cta-band">
@@ -296,6 +405,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
@@ -407,6 +517,7 @@
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
     
+
     <!-- Scripts -->
     <script src="script.js"></script>
 </body>

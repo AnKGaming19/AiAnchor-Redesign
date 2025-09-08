@@ -452,6 +452,169 @@ function trackEvent(eventName, eventData = {}) {
     // Add other analytics providers as needed
 }
 
+// ===== HERO ROI POPOVER (scoped, safe) =====
+(function(){
+    const EURO = n => '€' + Math.round(+n || 0).toLocaleString();
+    const $ = id => document.getElementById(id);
+
+    const pop = $('roi-pop'), openBtn = $('roi-open'), closeBtn = $('roi-close');
+    const navROI = $('nav-roi');
+    const niche = $('roi-niche'), leads = $('roi-leads'), leadsVal = $('roi-leads-val'), leadsNum = $('roi-leads-num');
+    const rev = $('roi-rev'), revVal = $('roi-rev-val'), revNum = $('roi-rev-num');
+    const miss = $('roi-miss'), missVal = $('roi-miss-val'), missNum = $('roi-miss-num');
+    const closeRate = $('roi-close'), closeSlider = $('roi-close-slider'), closeVal = $('roi-close-val');
+    const out = $('roi-number'), advTgl = $('roi-adv-toggle'), advBox = $('roi-advanced');
+
+    if (!pop || !niche) return;
+
+    // Presets
+    const PRESETS = {
+        real_estate:   { rev: 3000, miss: 18, close: 20 },
+        dental:        { rev: 500,  miss: 20, close: 18 },
+        clinic_medspa: { rev: 400,  miss: 20, close: 22 },
+        auto_repair:   { rev: 250,  miss: 15, close: 30 },
+        home_services: { rev: 650,  miss: 18, close: 25 },
+        fitness:       { rev: 350,  miss: 12, close: 35 },
+        legal:         { rev: 2000, miss: 20, close: 14 },
+        restaurant:    { rev: 60,   miss: 10, close: 6  },
+        ecommerce:     { rev: 75,   miss: 12, close: 3  },
+        saas:          { rev: 800,  miss: 18, close: 12 },
+        education:     { rev: 500,  miss: 16, close: 20 },
+        hospitality:   { rev: 300,  miss: 15, close: 18 },
+        beauty:        { rev: 120,  miss: 18, close: 30 },
+        veterinary:    { rev: 180,  miss: 15, close: 28 },
+    };
+    const RECOVERY = 0.60;
+
+    function applyPreset(key){
+        const p = PRESETS[key] || PRESETS.dental;
+        leads.value = 100;
+        leadsVal.textContent = '100';
+        leadsNum.value = 100;
+        rev.value = p.rev;
+        revVal.textContent = '€' + p.rev;
+        revNum.value = p.rev;
+        miss.value = p.miss;
+        missVal.textContent = p.miss + '%';
+        missNum.value = p.miss;
+        closeRate.value = p.close;
+        closeSlider.value = p.close;
+        closeVal.textContent = p.close + '%';
+        calc();
+        try { localStorage.setItem('aianchor_last_niche', key); } catch(_) {}
+    }
+
+    function calc(){
+        const L = (+leads.value || 0);
+        const R = (+rev.value   || 0);
+        const M = (+miss.value  || 0) / 100;
+        const C = (+closeRate.value || 0) / 100;
+
+        const recovered = L * M * RECOVERY * C * R;
+        out.textContent = EURO(recovered);
+    }
+
+    // Open/close
+    function openPop(){
+        pop.classList.add('show');
+        pop.setAttribute('aria-hidden','false');
+        setTimeout(()=> pop.scrollIntoView({behavior:'smooth', block:'nearest'}), 10);
+    }
+    function closePop(){
+        pop.classList.remove('show');
+        pop.setAttribute('aria-hidden','true');
+    }
+
+    openBtn && openBtn.addEventListener('click', openPop);
+    navROI && navROI.addEventListener('click', (e)=>{ e.preventDefault(); openPop(); });
+    closeBtn && closeBtn.addEventListener('click', closePop);
+    document.addEventListener('keydown', (e)=>{ if (e.key==='Escape') closePop(); });
+
+    // Bind
+    [leads, rev, miss, closeRate, closeSlider, leadsNum, revNum, missNum].forEach(el=>{
+        el && el.addEventListener('input', ()=>{
+            if (el === leads) {
+                leadsVal.textContent = leads.value;
+                leadsNum.value = leads.value;
+            }
+            if (el === leadsNum) {
+                leads.value = leadsNum.value;
+                leadsVal.textContent = leadsNum.value;
+            }
+            if (el === rev) {
+                revVal.textContent = '€' + rev.value;
+                revNum.value = rev.value;
+            }
+            if (el === revNum) {
+                rev.value = revNum.value;
+                revVal.textContent = '€' + revNum.value;
+            }
+            if (el === miss) {
+                missVal.textContent = miss.value + '%';
+                missNum.value = miss.value;
+            }
+            if (el === missNum) {
+                miss.value = missNum.value;
+                missVal.textContent = missNum.value + '%';
+            }
+            if (el === closeSlider) {
+                closeVal.textContent = closeSlider.value + '%';
+                closeRate.value = closeSlider.value;
+            }
+            if (el === closeRate) {
+                closeSlider.value = closeRate.value;
+                closeVal.textContent = closeRate.value + '%';
+            }
+            calc();
+        });
+    });
+    niche.addEventListener('change', ()=> applyPreset(niche.value));
+
+    // Advanced toggle
+    advTgl && advTgl.addEventListener('click', ()=>{
+        const isHidden = advBox.hasAttribute('hidden');
+        if (isHidden) { 
+            // Show advanced section
+            advBox.removeAttribute('hidden'); 
+            advTgl.setAttribute('aria-expanded','true'); 
+        } else { 
+            // Hide advanced section
+            advBox.setAttribute('hidden',''); 
+            advTgl.setAttribute('aria-expanded','false'); 
+        }
+    });
+
+
+    // Init
+    const saved = (()=>{ try { return localStorage.getItem('aianchor_last_niche'); } catch(_){ return null; }})();
+    const startKey = saved || niche.value;
+    niche.value = startKey;
+    applyPreset(startKey);
+    calc();
+
+    // Auto-inject summary into message textarea if present
+    window.addEventListener('load', ()=>{
+        const saved = localStorage.getItem('aianchor_roi');
+        const msg = document.getElementById('message');
+        if (saved && msg && !msg.value) {
+            const d = JSON.parse(saved);
+            msg.value = `Niche: ${d.niche}, Monthly leads: ${d.leads}, Avg ticket: €${d.rev}, Missed: ${d.miss}%, Close: ${d.close}%. Want a plan to recover this?`;
+        }
+    });
+})();
+
+
+// ===== CTA ANALYTICS =====
+(function(){
+    const ctas = document.querySelectorAll('.cta-button');
+    ctas.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+            window.__aianchor_events = window.__aianchor_events || [];
+            window.__aianchor_events.push({ type:'cta_click', label: btn.textContent.trim(), ts: Date.now() });
+        });
+    });
+})();
+
 // ===== EXPORT FOR GLOBAL USE =====
 window.AIAnchor = {
     scrollToContact,
