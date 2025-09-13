@@ -45,8 +45,9 @@ function selectIndustry(industryId) {
     // Render form
     renderForm(schema);
     
-    // Show form, hide selector
+    // Show form, hide selector and welcome section
     document.getElementById('industrySelector').style.display = 'none';
+    document.getElementById('welcomeSection').style.display = 'none';
     document.getElementById('formSection').classList.add('active');
     
     // Re-attach form event listener after form is rendered
@@ -96,6 +97,7 @@ function selectIndustry(industryId) {
 
 function showIndustrySelector() {
     document.getElementById('industrySelector').style.display = 'flex';
+    document.getElementById('welcomeSection').style.display = 'block';
     document.getElementById('formSection').classList.remove('active');
 }
 
