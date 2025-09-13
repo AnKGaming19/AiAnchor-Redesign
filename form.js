@@ -45,9 +45,10 @@ function selectIndustry(industryId) {
     // Render form
     renderForm(schema);
     
-    // Show form, hide selector and welcome section
+    // Show form, hide selector, welcome section, and pick industry section
     document.getElementById('industrySelector').style.display = 'none';
     document.getElementById('welcomeSection').style.display = 'none';
+    document.getElementById('pickIndustrySection').style.display = 'none';
     document.getElementById('formSection').classList.add('active');
     
     // Re-attach form event listener after form is rendered
@@ -96,9 +97,34 @@ function selectIndustry(industryId) {
 }
 
 function showIndustrySelector() {
+    // Hide form first
+    document.getElementById('formSection').classList.remove('active');
+    
+    // Show industry selector with fade-in effect
     document.getElementById('industrySelector').style.display = 'flex';
     document.getElementById('welcomeSection').style.display = 'block';
-    document.getElementById('formSection').classList.remove('active');
+    document.getElementById('pickIndustrySection').style.display = 'block';
+    
+    // Add fade-in animation
+    const industrySelector = document.getElementById('industrySelector');
+    const welcomeSection = document.getElementById('welcomeSection');
+    const pickIndustrySection = document.getElementById('pickIndustrySection');
+    
+    // Reset opacity and animate
+    industrySelector.style.opacity = '0';
+    welcomeSection.style.opacity = '0';
+    pickIndustrySection.style.opacity = '0';
+    
+    // Fade in with slight delay for smooth effect
+    setTimeout(() => {
+        industrySelector.style.transition = 'opacity 0.5s ease-in-out';
+        welcomeSection.style.transition = 'opacity 0.5s ease-in-out';
+        pickIndustrySection.style.transition = 'opacity 0.5s ease-in-out';
+        
+        industrySelector.style.opacity = '1';
+        welcomeSection.style.opacity = '1';
+        pickIndustrySection.style.opacity = '1';
+    }, 50);
 }
 
 function renderForm(schema) {
@@ -262,28 +288,7 @@ function checkURLParams() {
     }
 }
 
-// Form submission - wait for DOM to be ready
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('intakeForm');
-    console.log('Form found:', !!form);
-    if (form) {
-        console.log('Adding submit event listener');
-        form.addEventListener('submit', handleFormSubmit);
-        
-        // Also add a click listener to the submit button as backup
-        const submitBtn = form.querySelector('button[type="submit"]');
-        console.log('Submit button found:', !!submitBtn);
-        if (submitBtn) {
-            submitBtn.addEventListener('click', function(e) {
-                console.log('Submit button clicked - triggering form submission');
-                e.preventDefault();
-                handleFormSubmit(e);
-            });
-        }
-    } else {
-        console.error('Form not found!');
-    }
-});
+// Form submission is handled in selectIndustry function after form is rendered
 
 async function handleFormSubmit(e) {
     console.log('handleFormSubmit called!');
@@ -348,8 +353,8 @@ async function handleFormSubmit(e) {
             // Clear saved data
             localStorage.removeItem(`aia_intake_state_${currentIndustry}`);
             
-            // Show success message with custom alert
-            showAlert('🎉 Thank you! Your demo request has been submitted successfully. We\'ll contact you within 24 hours.', 'success');
+            // Show custom alert modal
+            showCustomAlert();
             
             // Reset form
             form.reset();
@@ -439,3 +444,30 @@ document.addEventListener('change', function(e) {
         updateProgress();
     }
 });
+
+// Custom Alert Functions
+function showCustomAlert() {
+    const alert = document.getElementById('customAlert');
+    if (alert) {
+        // Show alert immediately with smooth animation
+        alert.classList.add('show');
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+        
+        // Smoothly scroll to top after alert is shown
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 50);
+    }
+}
+
+function closeCustomAlert() {
+    const alert = document.getElementById('customAlert');
+    if (alert) {
+        alert.classList.remove('show');
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+        // Refresh the page
+        window.location.reload();
+    }
+}
