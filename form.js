@@ -1,0 +1,281 @@
+// Form functionality for AIAnchor Demo Intake
+
+// Initialize the form
+document.addEventListener('DOMContentLoaded', function() {
+    initializeIndustrySelector();
+    checkURLParams();
+});
+
+function initializeIndustrySelector() {
+    const grid = document.getElementById('industryGrid');
+    grid.innerHTML = INDUSTRIES.map(industry => `
+        <div class="industry-chip" data-industry="${industry.id}" onclick="selectIndustry('${industry.id}')">
+            <i class="${industry.icon}"></i>
+            <h3>${industry.name}</h3>
+            <p>${industry.description}</p>
+        </div>
+    `).join('');
+}
+
+function selectIndustry(industryId) {
+    currentIndustry = industryId;
+    const industry = INDUSTRIES.find(i => i.id === industryId);
+    const schema = FORM_SCHEMAS[industryId];
+    
+    // Update UI
+    document.getElementById('industryName').textContent = industry.name;
+    document.getElementById('formTitle').textContent = schema.title;
+    
+    // Load saved data if exists
+    loadFormData(industryId);
+    
+    // Set default values for required fields if not already set
+    schema.sections.forEach(section => {
+        section.fields.forEach(field => {
+            if (field.required && field.default && !formData[field.name]) {
+                formData[field.name] = field.default;
+            }
+        });
+    });
+    
+    // Render form
+    renderForm(schema);
+    
+    // Show form, hide selector
+    document.getElementById('industrySelector').style.display = 'none';
+    document.getElementById('formSection').classList.add('active');
+    
+    // Update progress
+    updateProgress();
+}
+
+function showIndustrySelector() {
+    document.getElementById('industrySelector').style.display = 'flex';
+    document.getElementById('formSection').classList.remove('active');
+}
+
+function renderForm(schema) {
+    const container = document.getElementById('formSections');
+    container.innerHTML = schema.sections.map((section, index) => `
+        <div class="form-section-content" data-section="${index}">
+            <h3 onclick="toggleSection(${index})">
+                <i class="fas fa-chevron-down"></i>
+                ${section.title}
+            </h3>
+            <div class="section-fields">
+                ${section.fields.map(field => renderField(field)).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderField(field) {
+    const value = formData[field.name] || field.default || '';
+    const required = field.required ? '<span class="required">*</span>' : '';
+    
+    switch (field.type) {
+        case 'textarea':
+            return `
+                <div class="field-group">
+                    <label>${field.label} ${required}</label>
+                    <textarea name="${field.name}" placeholder="${field.placeholder || ''}" ${field.required ? 'required' : ''}>${value}</textarea>
+                    ${field.helper ? `<div class="field-helper">${field.helper}</div>` : ''}
+                </div>
+            `;
+        
+        case 'select':
+            return `
+                <div class="field-group">
+                    <label>${field.label} ${required}</label>
+                    <select name="${field.name}" ${field.required ? 'required' : ''}>
+                        <option value="">Select...</option>
+                        ${field.options.map(opt => `<option value="${opt}" ${value === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                    </select>
+                    ${field.helper ? `<div class="field-helper">${field.helper}</div>` : ''}
+                </div>
+            `;
+        
+        case 'multiselect':
+            const selectedValues = Array.isArray(value) ? value : (value ? value.split(',') : []);
+            return `
+                <div class="field-group">
+                    <label>${field.label} ${required}</label>
+                    <div class="chip-group">
+                        ${field.options.map(opt => `
+                            <div class="chip ${selectedValues.includes(opt) ? 'selected' : ''}" 
+                                 data-value="${opt}" onclick="toggleChip(this, '${field.name}')">
+                                ${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <input type="hidden" name="${field.name}" value="${selectedValues.join(',')}">
+                    ${field.helper ? `<div class="field-helper">${field.helper}</div>` : ''}
+                </div>
+            `;
+        
+        default:
+            return `
+                <div class="field-group">
+                    <label>${field.label} ${required}</label>
+                    <input type="${field.type}" name="${field.name}" value="${value}" 
+                           placeholder="${field.placeholder || ''}" ${field.required ? 'required' : ''}>
+                    ${field.helper ? `<div class="field-helper">${field.helper}</div>` : ''}
+                </div>
+            `;
+    }
+}
+
+function toggleSection(index) {
+    const section = document.querySelector(`[data-section="${index}"]`);
+    section.classList.toggle('collapsed');
+}
+
+function toggleChip(chip, fieldName) {
+    chip.classList.toggle('selected');
+    const selected = Array.from(chip.parentElement.querySelectorAll('.chip.selected'))
+        .map(c => c.dataset.value);
+    chip.parentElement.nextElementSibling.value = selected.join(',');
+    formData[fieldName] = selected.join(',');
+    updateProgress();
+}
+
+function updateProgress() {
+    const schema = FORM_SCHEMAS[currentIndustry];
+    if (!schema) return;
+    
+    let totalFields = 0;
+    let completedFields = 0;
+    
+    schema.sections.forEach(section => {
+        section.fields.forEach(field => {
+            if (field.required) {
+                totalFields++;
+                const value = formData[field.name] || field.default || '';
+                if (value && value.trim() !== '') {
+                    completedFields++;
+                }
+            }
+        });
+    });
+    
+    const progress = totalFields > 0 ? (completedFields / totalFields) * 100 : 0;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+    document.getElementById('progressText').textContent = `${Math.round(progress)}% Complete`;
+}
+
+function saveProgress() {
+    if (!currentIndustry) return;
+    
+    const form = document.getElementById('intakeForm');
+    const formDataObj = new FormData(form);
+    
+    // Update global formData
+    for (let [key, value] of formDataObj.entries()) {
+        formData[key] = value;
+    }
+    
+    // Save to localStorage
+    localStorage.setItem(`aia_intake_state_${currentIndustry}`, JSON.stringify(formData));
+    
+    // Show feedback
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+    btn.style.background = '#10b981';
+    
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+    }, 2000);
+}
+
+function loadFormData(industryId) {
+    const saved = localStorage.getItem(`aia_intake_state_${industryId}`);
+    if (saved) {
+        formData = JSON.parse(saved);
+    } else {
+        formData = {};
+    }
+}
+
+function checkURLParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    if (type && FORM_SCHEMAS[type]) {
+        selectIndustry(type);
+    }
+}
+
+// Form submission
+document.getElementById('intakeForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formDataObj = new FormData(form);
+    
+    // Add hidden fields
+    formDataObj.append('form_name', 'demo_intake');
+    formDataObj.append('source', getUTMSource());
+    formDataObj.append('campaign', getUTMCampaign());
+    formDataObj.append('_gotcha', ''); // Honeypot
+    
+    // Add industry info
+    formDataObj.append('industry', currentIndustry);
+    
+    try {
+        const response = await fetch('https://formspree.io/f/xgvlrqkj', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formDataObj
+        });
+        
+        if (response.ok) {
+            // Clear saved data
+            localStorage.removeItem(`aia_intake_state_${currentIndustry}`);
+            
+            // Show success message
+            alert('Thank you! Your demo request has been submitted. We\'ll contact you within 24 hours.');
+            
+            // Reset form
+            form.reset();
+            formData = {};
+            updateProgress();
+            
+            // Show success state on the form instead of going back to selector
+            document.getElementById('formTitle').textContent = 'Demo Request Submitted Successfully!';
+            document.getElementById('progressText').textContent = '100% Complete - Thank you!';
+            document.getElementById('progressFill').style.width = '100%';
+        } else {
+            throw new Error('Form submission failed');
+        }
+    } catch (error) {
+        alert('Sorry, there was an error submitting your request. Please try again or contact us directly.');
+    }
+});
+
+function getUTMSource() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('utm_source') || document.referrer || 'direct';
+}
+
+function getUTMCampaign() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('utm_campaign') || 'demo_intake';
+}
+
+// Update form data on input change
+document.addEventListener('input', function(e) {
+    if (e.target.form && e.target.form.id === 'intakeForm') {
+        formData[e.target.name] = e.target.value;
+        updateProgress();
+    }
+});
+
+document.addEventListener('change', function(e) {
+    if (e.target.form && e.target.form.id === 'intakeForm') {
+        formData[e.target.name] = e.target.value;
+        updateProgress();
+    }
+});

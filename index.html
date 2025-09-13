@@ -35,10 +35,10 @@
                 <nav class="nav" aria-label="Main navigation">
                     <ul class="nav-list">
                         <li><a href="#services" class="nav-link">Services</a></li>
-                        
+                        <li><a href="#results" class="nav-link">Results</a></li>
                         <li><a href="#process" class="nav-link">Process</a></li>
                         <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
-                        <li><a href="#home" class="nav-link" id="nav-roi">ROI Estimator</a></li>
+                        <li><a href="form.html" class="nav-link">Free Demo</a></li>
                         <li><a href="#contact" class="nav-link">Contact</a></li>
                     </ul>
                 </nav>
@@ -69,7 +69,7 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-headline reveal">
-                        Scale faster. <br class="work-br"><span class="highlight-blue">Work smarter.</span> <br class="mobile-br">Let AI do the heavy lifting.
+                        Scale faster <br class="work-br"><span class="highlight-blue">Work smarter</span> <br class="mobile-br">Let AI do the heavy lifting
                     </h1>
                     <p class="hero-subheadline reveal">
                         AIAnchor installs AI reception & process automation to answer every lead instantly, eliminate busywork, and recover lost revenue—fast.
@@ -258,7 +258,8 @@
     </section>
 
 
-  
+   
+
     <!-- Process Section -->
     <section class="process" id="process">
         <div class="container">
@@ -271,22 +272,179 @@
                 <div class="process-step reveal">
                     <div class="step-number">1</div>
                     <h3>Discovery</h3>
-                    <p>We analyze your current processes, identify automation opportunities, and create a strategic roadmap tailored to your business goals.</p>
+                    <p>We analyze your current processes and identify automation opportunities.</p>
+                    <div class="step-details">
+                        <div class="deliverable">
+                            <strong>Deliverables:</strong> Process audit, automation roadmap, ROI projections
+                        </div>
+                        <div class="timeline">
+                            <strong>Timeline:</strong> 2-3 days
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="process-step reveal">
                     <div class="step-number">2</div>
                     <h3>Pilot</h3>
-                    <p>We build and deploy a focused automation pilot to validate the approach and demonstrate immediate value before scaling.</p>
+                    <p>We build and deploy a focused automation pilot to validate the approach.</p>
+                    <div class="step-details">
+                        <div class="deliverable">
+                            <strong>Deliverables:</strong> Working AI system, performance metrics, optimization plan
+                        </div>
+                        <div class="timeline">
+                            <strong>Timeline:</strong> 7-14 days
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="process-step reveal">
                     <div class="step-number">3</div>
                     <h3>Scale & Maintain</h3>
-                    <p>We expand successful automations across your organization and provide ongoing optimization and support to maximize ROI.</p>
+                    <p>We expand successful automations and provide ongoing optimization.</p>
+                    <div class="step-details">
+                        <div class="deliverable">
+                            <strong>Deliverables:</strong> Full automation suite, team training, ongoing support
+                        </div>
+                        <div class="timeline">
+                            <strong>Timeline:</strong> 2-4 weeks
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <div class="process-proof reveal">
+                <p><strong>Avg. go-live: 14 days • 29% fewer missed calls after Pilot</strong></p>
+            </div>
+            
+            <div class="process-cta reveal">
+                <button class="cta-button" onclick="scrollToContact()">Get Your Automation Plan</button>
+            </div>
         </div>
+    </section>
+
+    <!-- AI Receptionist Section -->
+    <section id="ai-receptionist" class="ai-receptionist">
+      <div class="container">
+        <h2 class="section-title">Meet Your 24/7 AI Receptionist</h2>
+        <p class="ai-receptionist-subtitle">
+          Never miss another call, booking, or client opportunity. Our AI Receptionist
+          handles scheduling, inquiries, and follow-ups — so you can focus on growing your business.
+        </p>
+
+        <div class="ai-receptionist-grid">
+          <div class="ai-feature">
+            <i class="fas fa-phone-volume"></i>
+            <h3>Always On</h3>
+            <p>Answers client calls and messages 24/7 — no breaks, no missed leads.</p>
+          </div>
+          <div class="ai-feature">
+            <i class="fas fa-calendar-check"></i>
+            <h3>Smart Scheduling</h3>
+            <p>Books appointments, manages calendars, and avoids double-booking.</p>
+          </div>
+          <div class="ai-feature">
+            <i class="fas fa-comments"></i>
+            <h3>Natural Conversations</h3>
+            <p>Understands client requests and responds like a real human assistant.</p>
+          </div>
+          <div class="ai-feature">
+            <i class="fas fa-industry"></i>
+            <h3>Tailored for Your Industry</h3>
+            <p>From dental clinics to real estate — optimized workflows for your business.</p>
+          </div>
+        </div>
+
+        <div class="ai-receptionist-cta">
+          <button class="cta-button" onclick="scrollToContact()">Book Free Demo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard-section" aria-labelledby="dashboard-title">
+      <div class="container">
+        <h2 id="dashboard-title" class="section-title reveal">Control Everything From Your Dashboard</h2>
+        <p class="dashboard-subtitle reveal">
+          Manage calls, view appointments, track leads, and customize your AI receptionist — all from one simple, web-based app.
+        </p>
+
+        <div class="dashboard-grid reveal" role="list">
+          <article class="dashboard-feature" role="listitem">
+            <i class="fas fa-calendar"></i>
+            <h3>Appointments Made Easy</h3>
+            <p>View and manage all bookings in real time, with calendar sync.</p>
+          </article>
+
+          <article class="dashboard-feature" role="listitem">
+            <i class="fas fa-chart-line"></i>
+            <h3>Business Insights</h3>
+            <p>Track answered calls, saved hours, pipeline value, and ROI at a glance.</p>
+          </article>
+
+          <article class="dashboard-feature" role="listitem">
+            <i class="fas fa-sliders-h"></i>
+            <h3>Custom Settings</h3>
+            <p>Control tone, availability, qualifying questions, and escalation rules.</p>
+          </article>
+        </div>
+
+        <div class="dashboard-visual reveal">
+          <div class="mockup-grid">
+            <div class="mockup-item mockup-main">
+              <div class="mockup-border">
+                <img
+                  src="Anchor Insights - Demo - Google Chrome 9_13_2025 6_39_33 PM.png"
+                  alt="AIAnchor dashboard main view showing appointments and analytics"
+                  loading="lazy"
+                  onclick="openImageModal(this)"
+                  style="cursor: pointer;"
+                />
+                <div class="mockup-label">Main Dashboard</div>
+              </div>
+            </div>
+            
+            <div class="mockup-item mockup-side">
+              <div class="mockup-border">
+                <img
+                  src="Anchor Insights - Demo - Google Chrome 9_13_2025 6_39_43 PM.png"
+                  alt="AIAnchor analytics view"
+                  loading="lazy"
+                  onclick="openImageModal(this)"
+                  style="cursor: pointer;"
+                />
+                <div class="mockup-label">Analytics</div>
+              </div>
+            </div>
+            
+            <div class="mockup-item mockup-side">
+              <div class="mockup-border">
+                <img
+                  src="Anchor Insights - Demo - Google Chrome 9_13_2025 6_39_47 PM.png"
+                  alt="AIAnchor settings panel"
+                  loading="lazy"
+                  onclick="openImageModal(this)"
+                  style="cursor: pointer;"
+                />
+                <div class="mockup-label">AI Receptionist</div>
+              </div>
+            </div>
+            
+            <div class="mockup-item mockup-side">
+              <div class="mockup-border">
+                <img
+                  src="Anchor Insights - Demo - Google Chrome 9_13_2025 6_39_51 PM.png"
+                  alt="AIAnchor mobile view"
+                  loading="lazy"
+                  onclick="openImageModal(this)"
+                  style="cursor: pointer;"
+                />
+                <div class="mockup-label">Bookings</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- Testimonials Section -->
@@ -346,20 +504,103 @@
         </div>
     </section>
 
-
-    <!-- CTA Band -->
-    <section class="cta-band">
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
         <div class="container">
-            <div class="cta-content reveal">
-                <h2>Ready to scale your business with AI automation?</h2>
-                <button class="btn btn-primary btn-lg" onclick="scrollToContact()">
-                    <i class="fas fa-calendar-check"></i>
-                    Book Your Free Strategy Call
-                </button>
+            <div class="section-header reveal">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about AIAnchor and AI automation</p>
+            </div>
+            
+            <div class="faq-container reveal">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Why should I choose AIAnchor over a traditional agency?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Because we don't waste time with "generic" strategies. AIAnchor is built to automate, optimize, and scale fast. Instead of endless manual work, we plug AI into your workflows to cut costs, save time, and unlock growth.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is AI really practical for my business, or is it just hype?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>AI is not the future—it's the present. Our clients already save hundreds of hours per month on tasks like customer support, bookings, lead management, and marketing. We make sure AI works for your specific business, not just as a buzzword.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What results can I realistically expect?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>On average, businesses see:</p>
+                        <ul>
+                            <li>40–70% faster operations</li>
+                            <li>20–50% lower costs</li>
+                            <li>Consistent new revenue streams by automating customer interactions</li>
+                        </ul>
+                        <p>We don't just "install tools"—we engineer systems that pay for themselves.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What happens on the free strategy call?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We'll map out your current processes, identify hidden automation opportunities, and show you a custom AI blueprint for scaling. You'll leave the call with clarity—even if you don't work with us.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you lock me into contracts?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nope. We believe in results, not contracts. If you're not seeing value, you don't stay. Simple.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>I'm not technical—can I still work with AIAnchor?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely. You don't need to learn code or AI jargon. We handle the tech, you enjoy the results. Think of us as your AI department—without the overhead.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What industries do you specialize in?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We've helped real estate agents, e-commerce brands, consultants, health & wellness businesses, and local service providers. If your business has repeatable tasks, we can automate and scale it.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How fast can we get started?</span>
+                        <i class="fas fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Most clients start seeing AI systems live in as little as 7–14 days after their first call.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
@@ -373,7 +614,7 @@
                 <div class="contact-info reveal">
                     <h3>Why Choose AIAnchor?</h3>
                     <ul class="contact-benefits">
-                        
+                        <li><i class="fas fa-check"></i> Proven track record with 50+ clients</li>
                         <li><i class="fas fa-check"></i> Custom solutions, no cookie-cutter approach</li>
                         <li><i class="fas fa-check"></i> Ongoing support and optimization</li>
                         <li><i class="fas fa-check"></i> ROI-focused implementation</li>
@@ -464,6 +705,15 @@
 
     <!-- Alert Container -->
     <div id="alertContainer" class="alert-container" role="status" aria-live="polite"></div>
+
+    <!-- Image Zoom Modal -->
+    <div id="imageModal" class="image-modal" style="display: none;">
+        <div class="image-modal-content">
+            <span class="image-modal-close">&times;</span>
+            <img id="modalImage" src="" alt="">
+            <div class="image-modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
 
     <!-- Vercel Analytics -->
     <script>

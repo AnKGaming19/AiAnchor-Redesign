@@ -13,6 +13,7 @@ function initializeApp() {
     setupRevealAnimations();
     setupFormHandling();
     setupHeaderScroll();
+    setupImageModal();
 }
 
 // ===== MOBILE MENU =====
@@ -270,7 +271,7 @@ async function handleFormSubmit(e) {
         forwardToZoho(formData);
         
         // Forward to n8n Production Webhook (non-blocking)
-        fetch('https://anastasisk19.app.n8n.cloud/webhook-test/329a6e51-b630-4584-b3fa-f0981f998994', {
+        fetch('https://aianchor.app.n8n.cloud/webhook/4d0fe820-6feb-4aeb-96b6-1b980dcf7b83', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -616,11 +617,81 @@ function trackEvent(eventName, eventData = {}) {
 })();
 
 // ===== EXPORT FOR GLOBAL USE =====
+// ===== IMAGE MODAL FUNCTIONALITY =====
+function setupImageModal() {
+    const modal = document.getElementById('imageModal');
+    const closeBtn = document.querySelector('.image-modal-close');
+    
+    // Close modal when clicking the X button
+    closeBtn.addEventListener('click', closeImageModal);
+    
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeImageModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display !== 'none') {
+            closeImageModal();
+        }
+    });
+    
+}
+
+function openImageModal(imgElement) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    
+    modal.style.display = 'flex';
+    modalImg.src = imgElement.src;
+    modalImg.alt = imgElement.alt;
+    modalCaption.textContent = imgElement.alt;
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    modal.style.display = 'none';
+    
+    // Restore body scroll
+    document.body.style.overflow = 'auto';
+}
+
+// ===== FAQ FUNCTIONALITY =====
+function toggleFAQ(button) {
+    const faqItem = button.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    
+    // Close all other FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Toggle current item
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
+}
+
+// Make functions globally available
+window.openImageModal = openImageModal;
+window.closeImageModal = closeImageModal;
+window.toggleFAQ = toggleFAQ;
+
 window.AIAnchor = {
     scrollToContact,
     scrollToResults,
     showAlert,
-    trackEvent
+    trackEvent,
+    openImageModal,
+    closeImageModal,
+    toggleFAQ
 };
 
 
