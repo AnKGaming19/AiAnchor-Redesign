@@ -233,22 +233,41 @@ async function handleFormSubmit(e) {
     console.log('Form submission started');
     
     const form = e.target;
+    
+    // First, update formData with current form values
     const formDataObj = new FormData(form);
+    for (let [key, value] of formDataObj.entries()) {
+        formData[key] = value;
+    }
+    
+    // Create a new FormData object for submission
+    const submitData = new FormData();
+    
+    // Add all form fields
+    for (let [key, value] of formDataObj.entries()) {
+        if (value && value.trim() !== '') {
+            submitData.append(key, value);
+        }
+    }
     
     // Add hidden fields
-    formDataObj.append('form_name', 'demo_intake');
-    formDataObj.append('source', getUTMSource());
-    formDataObj.append('campaign', getUTMCampaign());
-    formDataObj.append('_gotcha', ''); // Honeypot
-    
-    // Add industry info
-    formDataObj.append('industry', currentIndustry);
+    submitData.append('form_name', 'demo_intake');
+    submitData.append('source', getUTMSource());
+    submitData.append('campaign', getUTMCampaign());
+    submitData.append('_gotcha', ''); // Honeypot
+    submitData.append('industry', currentIndustry);
     
     // Debug: Log form data
     console.log('Form data being submitted:');
-    for (let [key, value] of formDataObj.entries()) {
+    for (let [key, value] of submitData.entries()) {
         console.log(key, value);
     }
+    
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    submitBtn.disabled = true;
     
     try {
         console.log('Sending request to Formspree...');
@@ -257,7 +276,7 @@ async function handleFormSubmit(e) {
             headers: {
                 'Accept': 'application/json'
             },
-            body: formDataObj
+            body: submitData
         });
         
         console.log('Response status:', response.status);
@@ -287,6 +306,10 @@ async function handleFormSubmit(e) {
     } catch (error) {
         console.error('Form submission error:', error);
         alert('Sorry, there was an error submitting your request. Please try again or contact us directly.');
+    } finally {
+        // Reset button state
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
     }
 }
 
