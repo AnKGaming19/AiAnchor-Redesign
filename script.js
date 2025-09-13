@@ -339,14 +339,32 @@ async function handleFormSubmit(e) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         
-        // Forward to Zoho Flow (non-blocking)
-        forwardToZoho(formData);
-        
         // Forward to Zapier Webhook (non-blocking)
-        fetch('https://hooks.zapier.com/hooks/catch/23026262/um4d47l/', {
-            method: 'POST',
-            body: formData
-        }).catch(() => {});
+        // Create a simple form submission to avoid CORS issues
+        const zapierForm = document.createElement('form');
+        zapierForm.method = 'POST';
+        zapierForm.action = 'https://hooks.zapier.com/hooks/catch/23026262/um4d47l/';
+        zapierForm.style.display = 'none';
+        
+        // Add form data as hidden inputs
+        for (const [key, value] of formData.entries()) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            zapierForm.appendChild(input);
+        }
+        
+        // Add source field
+        const sourceInput = document.createElement('input');
+        sourceInput.type = 'hidden';
+        sourceInput.name = 'source';
+        sourceInput.value = 'AIAnchor Website';
+        zapierForm.appendChild(sourceInput);
+        
+        document.body.appendChild(zapierForm);
+        zapierForm.submit();
+        document.body.removeChild(zapierForm);
         // Send to Formspree
         const response = await fetch(form.action, {
             method: 'POST',
