@@ -1544,14 +1544,110 @@ textarea:focus {
 @media (max-width: 991px) {
     .roi-pop { 
         position: fixed; 
-        left: 10px; 
-        right: 10px; 
-        bottom: 10px; 
-        z-index: 1200; 
+        left: 16px; 
+        right: 16px; 
+        top: 50%;
+        transform: translateY(-50%) scale(0.95);
+        bottom: auto;
+        z-index: 1200;
+        max-height: 90vh;
+        overflow-y: auto;
+        margin-top: 0;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    
+    .roi-pop.show {
+        transform: translateY(-50%) scale(1);
+        max-height: 90vh;
     }
     
     .roi-pop__row { 
         grid-template-columns: 1fr; 
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .roi-pop__header {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+    
+    .roi-pop label {
+        font-size: 0.9rem;
+    }
+    
+    .roi-pop input, 
+    .roi-pop select {
+        padding: 12px;
+        font-size: 16px; /* Prevents zoom on iOS */
+        border-radius: 12px;
+    }
+    
+    .roi-pop__result {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 16px;
+    }
+    
+    .roi-pop__result strong {
+        font-size: 2rem;
+    }
+    
+    .roi-adv-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .roi-pop__adv {
+        margin-top: 16px;
+        padding: 16px;
+    }
+    
+    .roi-input-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .roi-number-input {
+        margin-top: 8px;
+    }
+}
+
+/* Additional mobile improvements for smaller screens */
+@media (max-width: 480px) {
+    .roi-pop {
+        left: 12px;
+        right: 12px;
+        border-radius: 16px;
+        padding: 16px;
+    }
+    
+    .roi-pop__header {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    
+    .roi-pop__result strong {
+        font-size: 1.8rem;
+    }
+    
+    .roi-pop input, 
+    .roi-pop select {
+        padding: 10px;
+        font-size: 16px;
+    }
+    
+    .roi-pop__close {
+        font-size: 20px;
+        padding: 4px;
+    }
+    
+    .roi-adv-btn {
+        padding: 10px;
+        font-size: 0.85rem;
     }
 }
 
