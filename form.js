@@ -49,6 +49,47 @@ function selectIndustry(industryId) {
     document.getElementById('industrySelector').style.display = 'none';
     document.getElementById('formSection').classList.add('active');
     
+    // Re-attach form event listener after form is rendered
+    // Use setTimeout to ensure form is fully rendered
+    setTimeout(() => {
+        const form = document.getElementById('intakeForm');
+        if (form) {
+            console.log('Re-attaching form event listener after render');
+            // Remove existing listener first
+            form.removeEventListener('submit', handleFormSubmit);
+            form.addEventListener('submit', handleFormSubmit);
+            
+            // Also re-attach button click listener
+            const submitBtn = form.querySelector('button[type="submit"]');
+            console.log('Looking for submit button in form:', form);
+            console.log('Submit button found after render:', !!submitBtn);
+            console.log('All buttons in form:', form.querySelectorAll('button'));
+            
+            if (submitBtn) {
+                console.log('Re-attaching submit button click listener');
+                submitBtn.removeEventListener('click', handleFormSubmit);
+                submitBtn.addEventListener('click', function(e) {
+                    console.log('Submit button clicked - triggering form submission');
+                    e.preventDefault();
+                    handleFormSubmit(e);
+                });
+            } else {
+                console.error('Submit button not found after form render!');
+                // Try alternative selectors
+                const altBtn = form.querySelector('.btn-primary');
+                console.log('Alternative button found:', !!altBtn);
+                if (altBtn) {
+                    console.log('Using alternative button selector');
+                    altBtn.addEventListener('click', function(e) {
+                        console.log('Alternative button clicked - triggering form submission');
+                        e.preventDefault();
+                        handleFormSubmit(e);
+                    });
+                }
+            }
+        }
+    }, 100); // Small delay to ensure form is rendered
+    
     // Update progress
     updateProgress();
 }
@@ -222,12 +263,28 @@ function checkURLParams() {
 // Form submission - wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('intakeForm');
+    console.log('Form found:', !!form);
     if (form) {
+        console.log('Adding submit event listener');
         form.addEventListener('submit', handleFormSubmit);
+        
+        // Also add a click listener to the submit button as backup
+        const submitBtn = form.querySelector('button[type="submit"]');
+        console.log('Submit button found:', !!submitBtn);
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function(e) {
+                console.log('Submit button clicked - triggering form submission');
+                e.preventDefault();
+                handleFormSubmit(e);
+            });
+        }
+    } else {
+        console.error('Form not found!');
     }
 });
 
 async function handleFormSubmit(e) {
+    console.log('handleFormSubmit called!');
     e.preventDefault();
     
     console.log('Form submission started');
