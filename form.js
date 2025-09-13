@@ -4,6 +4,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeIndustrySelector();
     checkURLParams();
+    
+    // Debug: Check if form exists
+    const form = document.getElementById('intakeForm');
+    console.log('Form found:', !!form);
 });
 
 function initializeIndustrySelector() {
@@ -141,16 +145,23 @@ function toggleChip(chip, fieldName) {
 
 function updateProgress() {
     const schema = FORM_SCHEMAS[currentIndustry];
-    if (!schema) return;
+    if (!schema) {
+        console.log('No schema found for industry:', currentIndustry);
+        return;
+    }
     
     let totalFields = 0;
     let completedFields = 0;
+    
+    console.log('Updating progress for industry:', currentIndustry);
+    console.log('Current formData:', formData);
     
     schema.sections.forEach(section => {
         section.fields.forEach(field => {
             if (field.required) {
                 totalFields++;
                 const value = formData[field.name] || field.default || '';
+                console.log(`Field ${field.name}: value="${value}", default="${field.default}", completed=${value && value.trim() !== ''}`);
                 if (value && value.trim() !== '') {
                     completedFields++;
                 }
@@ -159,6 +170,8 @@ function updateProgress() {
     });
     
     const progress = totalFields > 0 ? (completedFields / totalFields) * 100 : 0;
+    console.log(`Progress: ${completedFields}/${totalFields} = ${Math.round(progress)}%`);
+    
     document.getElementById('progressFill').style.width = `${progress}%`;
     document.getElementById('progressText').textContent = `${Math.round(progress)}% Complete`;
 }
@@ -206,9 +219,18 @@ function checkURLParams() {
     }
 }
 
-// Form submission
-document.getElementById('intakeForm').addEventListener('submit', async function(e) {
+// Form submission - wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('intakeForm');
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
+    }
+});
+
+async function handleFormSubmit(e) {
     e.preventDefault();
+    
+    console.log('Form submission started');
     
     const form = e.target;
     const formDataObj = new FormData(form);
@@ -222,7 +244,14 @@ document.getElementById('intakeForm').addEventListener('submit', async function(
     // Add industry info
     formDataObj.append('industry', currentIndustry);
     
+    // Debug: Log form data
+    console.log('Form data being submitted:');
+    for (let [key, value] of formDataObj.entries()) {
+        console.log(key, value);
+    }
+    
     try {
+        console.log('Sending request to Formspree...');
         const response = await fetch('https://formspree.io/f/xgvlrqkj', {
             method: 'POST',
             headers: {
@@ -230,6 +259,9 @@ document.getElementById('intakeForm').addEventListener('submit', async function(
             },
             body: formDataObj
         });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
         
         if (response.ok) {
             // Clear saved data
@@ -248,12 +280,15 @@ document.getElementById('intakeForm').addEventListener('submit', async function(
             document.getElementById('progressText').textContent = '100% Complete - Thank you!';
             document.getElementById('progressFill').style.width = '100%';
         } else {
-            throw new Error('Form submission failed');
+            const errorText = await response.text();
+            console.error('Form submission failed:', response.status, errorText);
+            throw new Error(`Form submission failed: ${response.status}`);
         }
     } catch (error) {
+        console.error('Form submission error:', error);
         alert('Sorry, there was an error submitting your request. Please try again or contact us directly.');
     }
-});
+}
 
 function getUTMSource() {
     const urlParams = new URLSearchParams(window.location.search);
