@@ -49,18 +49,19 @@
         }
         
         .industry-selector {
-            min-height: calc(100vh - 80px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem;
             position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         
         .industry-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             max-width: 1200px;
             width: 100%;
@@ -107,6 +108,93 @@
             font-size: 0.9rem;
             color: var(--muted);
             margin: 0;
+        }
+        
+        /* Page Title Section */
+        .page-title-section {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--brand-2), var(--brand));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+        
+        /* Welcome Message Container */
+        .welcome-message-container {
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .welcome-message-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            padding: 2rem 3rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .welcome-message-box:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+        }
+        
+        .welcome-text {
+            font-size: 1.2rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+                padding: 0 1rem;
+            }
+            
+            .welcome-message-container {
+                padding: 0 1rem;
+                margin: 1.5rem auto;
+            }
+            
+            .welcome-message-box {
+                padding: 1.5rem 2rem;
+            }
+            
+            .welcome-text {
+                font-size: 1.1rem;
+            }
+            
+            .industry-selector {
+                padding: 1rem;
+            }
+            
+            .industry-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .industry-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
         
         .form-section {
@@ -483,12 +571,27 @@
     </header>
 
     <div class="form-container">
+        <!-- Page Title -->
+        <div class="page-title-section">
+            <h1 class="page-title">Welcome to Your AI Transformation Journey!</h1>
+        </div>
+        
+        <!-- Welcome Message -->
+        <div class="welcome-message-container" id="welcomeSection">
+            <div class="welcome-message-box">
+                <p class="welcome-text">
+                    We're excited to show you how AI can revolutionize your business! 
+                    This personalized demo will take just 2-3 minutes and will give you a clear roadmap for implementing AI automation in your specific industry.
+                </p>
+            </div>
+        </div>
+        
         <!-- Industry Selector -->
         <div class="industry-selector" id="industrySelector">
             <div class="hero-text">
-                <h1 class="hero-headline reveal">
+                <h2 class="hero-headline reveal">
                     Choose your <span class="highlight-blue">business type</span>
-                </h1>
+                </h2>
                 <p class="hero-subheadline reveal">
                     Get a personalized AI automation demo tailored to your industry
                 </p>
