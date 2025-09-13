@@ -342,20 +342,11 @@ async function handleFormSubmit(e) {
         // Forward to Zoho Flow (non-blocking)
         forwardToZoho(formData);
         
-         // Forward to Zapier Webhook (non-blocking)
+        // Forward to Zapier Webhook (non-blocking)
         fetch('https://hooks.zapier.com/hooks/catch/23026262/um4d47l/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                email: formData.get('email'),
-                company: formData.get('company'),
-                phone: formData.get('phone'),
-                message: formData.get('message'),
-                source: 'AIAnchor Website'
-            })
+            body: formData
         }).catch(() => {});
-        
         // Send to Formspree
         const response = await fetch(form.action, {
             method: 'POST',
