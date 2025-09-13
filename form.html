@@ -218,8 +218,8 @@
             padding: 0.75rem;
             border: 2px solid rgba(99, 102, 241, 0.2);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text);
+            background: rgba(11, 18, 35, 0.9) !important;
+            color: var(--text) !important;
             font-family: inherit;
             transition: all 0.3s ease;
         }
@@ -266,6 +266,17 @@
             outline: none;
             border-color: var(--brand-2);
             box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+            background: rgba(11, 18, 35, 0.95) !important;
+            color: var(--text) !important;
+        }
+        
+        /* Prevent browser from changing input styles */
+        .field-group input:-webkit-autofill,
+        .field-group input:-webkit-autofill:hover,
+        .field-group input:-webkit-autofill:focus,
+        .field-group input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px rgba(11, 18, 35, 0.9) inset !important;
+            -webkit-text-fill-color: var(--text) !important;
         }
         
         .field-group textarea {
