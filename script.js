@@ -11,9 +11,12 @@ function initializeApp() {
     setupMobileMenu();
     setupSmoothScrolling();
     setupRevealAnimations();
+    setupReverseScrollReveal();
     setupFormHandling();
     setupHeaderScroll();
     setupImageModal();
+    setupRefreshScrollToTop();
+    setupSmartNavbar();
 }
 
 // ===== MOBILE MENU =====
@@ -155,6 +158,28 @@ function scrollToContact() {
     }
 }
 
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// ===== PAGE TRANSITION FUNCTION =====
+function transitionToForm(event) {
+    event.preventDefault();
+    const transition = document.getElementById('pageTransition');
+    const targetUrl = event.target.href;
+    
+    // Show transition overlay
+    transition.classList.add('active');
+    
+    // Navigate after transition starts
+    setTimeout(() => {
+        window.location.href = targetUrl;
+    }, 300);
+}
+
 function scrollToResults() {
     const resultsSection = document.querySelector('#results');
     if (resultsSection) {
@@ -179,6 +204,9 @@ function setupRevealAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+            } else {
+                // Remove visible class when element goes out of view
+                entry.target.classList.remove('visible');
             }
         });
     }, observerOptions);
@@ -187,6 +215,50 @@ function setupRevealAnimations() {
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(element => {
         observer.observe(element);
+    });
+}
+
+// ===== REVERSE SCROLL REVEAL (Bottom to Top) =====
+function setupReverseScrollReveal() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const reverseObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                // Remove visible class when element goes out of view
+                entry.target.classList.remove('visible');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all elements with reverse-reveal class
+    const reverseRevealElements = document.querySelectorAll('.reverse-reveal');
+    reverseRevealElements.forEach(element => {
+        reverseObserver.observe(element);
+    });
+}
+
+// ===== REFRESH SCROLL TO TOP =====
+function setupRefreshScrollToTop() {
+    // Override browser's default refresh behavior
+    window.addEventListener('beforeunload', function() {
+        // Scroll to top before page unloads
+        window.scrollTo(0, 0);
+    });
+    
+    // Also handle page load to ensure we start at top
+    window.addEventListener('load', function() {
+        window.scrollTo(0, 0);
+    });
+    
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function() {
+        window.scrollTo(0, 0);
     });
 }
 
@@ -517,11 +589,19 @@ function trackEvent(eventName, eventData = {}) {
 
     // Open/close
     function openPop(){
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.classList.add('expanded');
+        }
         pop.classList.add('show');
         pop.setAttribute('aria-hidden','false');
-        setTimeout(()=> pop.scrollIntoView({behavior:'smooth', block:'nearest'}), 10);
+        setTimeout(()=> pop.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
     }
     function closePop(){
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.classList.remove('expanded');
+        }
         pop.classList.remove('show');
         pop.setAttribute('aria-hidden','true');
     }
@@ -680,13 +760,54 @@ function toggleFAQ(button) {
 }
 
 // Make functions globally available
+window.scrollToTop = scrollToTop;
 window.openImageModal = openImageModal;
 window.closeImageModal = closeImageModal;
 window.toggleFAQ = toggleFAQ;
 
+// ===== SMART NAVBAR =====
+function setupSmartNavbar() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    function updateNavbar() {
+        const currentScrollY = window.scrollY;
+        
+        // Always show at top
+        if (currentScrollY < 50) {
+            header.classList.remove('navbar-hidden');
+            header.classList.add('navbar-visible');
+        }
+        // Hide when scrolling down, show when scrolling up
+        else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            header.classList.add('navbar-hidden');
+            header.classList.remove('navbar-visible');
+        } else if (currentScrollY < lastScrollY) {
+            header.classList.remove('navbar-hidden');
+            header.classList.add('navbar-visible');
+        }
+        
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestTick, { passive: true });
+}
+
 window.AIAnchor = {
     scrollToContact,
     scrollToResults,
+    scrollToTop,
     showAlert,
     trackEvent,
     openImageModal,

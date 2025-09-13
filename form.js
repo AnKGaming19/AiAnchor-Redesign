@@ -346,8 +346,8 @@ async function handleFormSubmit(e) {
             // Clear saved data
             localStorage.removeItem(`aia_intake_state_${currentIndustry}`);
             
-            // Show success message
-            alert('Thank you! Your demo request has been submitted. We\'ll contact you within 24 hours.');
+            // Show success message with custom alert
+            showAlert('🎉 Thank you! Your demo request has been submitted successfully. We\'ll contact you within 24 hours.', 'success');
             
             // Reset form
             form.reset();
@@ -365,7 +365,7 @@ async function handleFormSubmit(e) {
         }
     } catch (error) {
         console.error('Form submission error:', error);
-        alert('Sorry, there was an error submitting your request. Please try again or contact us directly.');
+        showAlert('❌ Sorry, there was an error submitting your request. Please try again or contact us directly.', 'error');
     } finally {
         // Reset button state
         submitBtn.innerHTML = originalBtnText;
@@ -381,6 +381,46 @@ function getUTMSource() {
 function getUTMCampaign() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('utm_campaign') || 'demo_intake';
+}
+
+// ===== ALERT SYSTEM =====
+function showAlert(message, type = 'success') {
+    const alertContainer = document.getElementById('alertContainer');
+    if (!alertContainer) return;
+
+    // Create alert element
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.setAttribute('role', type === 'success' ? 'status' : 'alert');
+    alert.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // Add to container
+    alertContainer.appendChild(alert);
+
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (alert.parentNode) {
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.parentNode.removeChild(alert);
+                }
+            }, 300);
+        }
+    }, 5000);
+
+    // Click to dismiss
+    alert.addEventListener('click', function() {
+        if (alert.parentNode) {
+            alert.parentNode.removeChild(alert);
+        }
+    });
 }
 
 // Update form data on input change
