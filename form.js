@@ -289,7 +289,10 @@ async function handleFormSubmit(e) {
     
     console.log('Form submission started');
     
-    const form = e.target;
+    // Get the form element - e.target might be the button, so find the form
+    const form = e.target.closest('form') || document.getElementById('intakeForm');
+    console.log('Form element:', form);
+    console.log('Is form element:', form instanceof HTMLFormElement);
     
     // First, update formData with current form values
     const formDataObj = new FormData(form);
