@@ -321,7 +321,6 @@ async function handleFormSubmit(e) {
     const form = e.target;
     const submitButton = form.querySelector('button[type="submit"]');
     const originalText = submitButton.innerHTML;
-    const successMessage = document.getElementById('form-success');
     
     // Check honeypot
     const honeypot = form.querySelector('#website');
@@ -339,43 +338,40 @@ async function handleFormSubmit(e) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
         
-        // Forward to Zapier Webhook (non-blocking)
-        // Create a simple form submission to avoid CORS issues
-        const zapierForm = document.createElement('form');
-        zapierForm.method = 'POST';
-        zapierForm.action = 'https://hooks.zapier.com/hooks/catch/23026262/um4d47l/';
-        zapierForm.style.display = 'none';
+        // Add source field for tracking
+        data.source = 'AIAnchor Website Contact Form';
+        data.timestamp = new Date().toISOString();
         
-        // Add form data as hidden inputs
-        for (const [key, value] of formData.entries()) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = value;
-            zapierForm.appendChild(input);
-        }
+        // Send to both Formspree and custom webhook
+        const promises = [
+            // Send to Formspree
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            }),
+            
+            // Send to custom webhook for automated replies
+            fetch('https://www.aianchor.online/webhook/4d0fe820-6feb-4aeb-96b6-1b980dcf7b83', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+        ];
         
-        // Add source field
-        const sourceInput = document.createElement('input');
-        sourceInput.type = 'hidden';
-        sourceInput.name = 'source';
-        sourceInput.value = 'AIAnchor Website';
-        zapierForm.appendChild(sourceInput);
+        // Wait for both requests to complete
+        const responses = await Promise.allSettled(promises);
         
-        document.body.appendChild(zapierForm);
-        zapierForm.submit();
-        document.body.removeChild(zapierForm);
-        // Send to Formspree
-        const response = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+        // Check if at least one submission was successful
+        const formspreeSuccess = responses[0].status === 'fulfilled' && responses[0].value.ok;
+        const webhookSuccess = responses[1].status === 'fulfilled' && responses[1].value.ok;
         
-        if (response.ok) {
+        if (formspreeSuccess || webhookSuccess) {
             showAlert('Thank you! Your message has been sent successfully. We\'ll get back to you soon.', 'success');
             form.reset();
             
@@ -387,7 +383,7 @@ async function handleFormSubmit(e) {
                 }
             }, 100);
         } else {
-            throw new Error('Form submission failed');
+            throw new Error('Both form submissions failed');
         }
         
     } catch (error) {
@@ -759,13 +755,13 @@ function toggleFAQ(button) {
     
     // Close all other FAQ items
     document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('active');
+        if (item !== faqItem) {
+            item.classList.remove('active');
+        }
     });
     
     // Toggle current item
-    if (!isActive) {
-        faqItem.classList.add('active');
-    }
+    faqItem.classList.toggle('active');
 }
 
 // Make functions globally available

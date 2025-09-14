@@ -35,7 +35,7 @@
                 
                 <nav class="nav" aria-label="Main navigation">
                     <ul class="nav-list">
-                      <li><a href="#services" class="nav-link">Services</a></li>
+                        <li><a href="#services" class="nav-link">Services</a></li>
                         <li><a href="#results" class="nav-link">Results</a></li>
                         <li><a href="#process" class="nav-link">Process</a></li>
                         <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
@@ -45,7 +45,7 @@
                     </ul>
                 </nav>
                 
-                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+               <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -68,7 +68,6 @@
                 <div class="hero-text">
                     <h1 class="hero-headline reveal">
                         Scale faster <br class="work-br"><span class="highlight-blue">Work smarter</span> <br class="mobile-br">Let AI do the <span class="highlight-blue">Heavy lifting</span>
-              
                     </h1>
                     <p class="hero-subheadline reveal">
                         AIAnchor installs AI reception & process automation to answer every lead instantly, eliminate busywork, and recover lost revenue—fast.
@@ -611,7 +610,7 @@
                     </ul>
                 </div>
                 
-                <form class="contact-form reverse-reveal" id="contactForm" action="https://hooks.zapier.com/hooks/catch/23026262/um4d47l/">
+                <form class="contact-form reverse-reveal" id="contactForm" action="https://formspree.io/f/xgvlrqkj" method="POST">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
                         <input type="text" id="name" name="name" required>
@@ -688,10 +687,10 @@
     </footer>
 
     <!-- Floating CTA -->
-    <button class="floating-cta" onclick="scrollToContact()" aria-label="Book a free strategy call">
+    <a href="form.html" class="floating-cta" onclick="transitionToForm(event)" aria-label="Book a free strategy call">
         <i class="fas fa-calendar-check"></i>
         <span>Book Call</span>
-    </button>
+    </a>
 
     <!-- Alert Container -->
     <div id="alertContainer" class="alert-container" role="status" aria-live="polite"></div>
