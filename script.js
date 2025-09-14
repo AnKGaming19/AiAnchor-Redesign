@@ -354,7 +354,7 @@ async function handleFormSubmit(e) {
             }),
             
             // Send to custom webhook for automated replies
-            fetch('https://www.aianchor.online/webhook/4d0fe820-6feb-4aeb-96b6-1b980dcf7b83', {
+            fetch('https://aianchor-webhook-service.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
