@@ -775,7 +775,11 @@
                     </ul>
                 </nav>
                 
-              <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='index.html#contact'">
+                    Book Call
+                </button>
+                
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -1140,15 +1144,66 @@
             if (mobileMenuToggle && nav) {
                 mobileMenuToggle.addEventListener('click', function() {
                     const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                    
+                    // Toggle menu state
                     mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
-                    nav.classList.toggle('mobile-open');
-                    mobileMenuToggle.classList.toggle('active');
+                    nav.classList.toggle('nav-open');
+                    
+                    // Toggle hamburger animation
+                    const spans = mobileMenuToggle.querySelectorAll('span');
+                    if (!isExpanded) {
+                        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                        spans[1].style.opacity = '0';
+                        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                    } else {
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
                 });
+                
+                // Close menu when clicking on nav links
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        closeMobileMenu();
+                    });
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                        closeMobileMenu();
+                    }
+                });
+                
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        closeMobileMenu();
+                    }
+                });
+            }
+            
+            function closeMobileMenu() {
+                const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+                const nav = document.querySelector('.nav');
+                const spans = mobileMenuToggle?.querySelectorAll('span');
+                
+                if (mobileMenuToggle && nav) {
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    nav.classList.remove('nav-open');
+                    
+                    if (spans) {
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
+                }
             }
         });
     </script>
 </body>
 </html>
-
 
 

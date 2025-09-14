@@ -253,6 +253,8 @@ section {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    z-index: 1001;
+    position: relative;
 }
 
 .mobile-menu-toggle span {
@@ -263,11 +265,20 @@ section {
     border-radius: 2px;
 }
 
+.mobile-menu-toggle:hover span {
+    background: var(--brand-2);
+}
+
+.mobile-menu-toggle:focus {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+}
+
 /* Mobile Navigation */
 @media (max-width: 768px) {
     .nav {
         position: fixed;
-        top: 100%;
+        top: 80px;
         left: 0;
         right: 0;
         background: rgba(11, 18, 32, 0.95);
@@ -1105,6 +1116,8 @@ section {
     
     .mobile-menu-toggle {
         display: flex;
+        z-index: 1001;
+        position: relative;
     }
     
     .hero-content {
