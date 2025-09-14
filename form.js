@@ -92,8 +92,19 @@ function selectIndustry(industryId) {
         }
     }, 100); // Small delay to ensure form is rendered
     
-    // Update progress
+    // Update progress and set initial button state
     updateProgress();
+    
+    // Ensure submit button starts disabled
+    setTimeout(() => {
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.5';
+            submitBtn.style.cursor = 'not-allowed';
+            submitBtn.innerHTML = '<i class="fas fa-lock"></i> Complete Form to Submit (0%)';
+        }
+    }, 150);
 }
 
 function showIndustrySelector() {
@@ -243,6 +254,23 @@ function updateProgress() {
     
     document.getElementById('progressFill').style.width = `${progress}%`;
     document.getElementById('progressText').textContent = `${Math.round(progress)}% Complete`;
+    
+    // Enable/disable submit button based on completion
+    const submitBtn = document.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        const isComplete = progress >= 100;
+        submitBtn.disabled = !isComplete;
+        
+        if (isComplete) {
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Demo Request';
+        } else {
+            submitBtn.style.opacity = '0.5';
+            submitBtn.style.cursor = 'not-allowed';
+            submitBtn.innerHTML = `<i class="fas fa-lock"></i> Complete Form to Submit (${Math.round(progress)}%)`;
+        }
+    }
 }
 
 function saveProgress() {
@@ -301,6 +329,13 @@ async function handleFormSubmit(e) {
     console.log('Form element:', form);
     console.log('Is form element:', form instanceof HTMLFormElement);
     
+    // Check if form is 100% complete before proceeding
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn.disabled) {
+        console.log('Form submission blocked - form not 100% complete');
+        return;
+    }
+    
     // First, update formData with current form values
     const formDataObj = new FormData(form);
     for (let [key, value] of formDataObj.entries()) {
@@ -331,7 +366,6 @@ async function handleFormSubmit(e) {
     }
     
     // Show loading state
-    const submitBtn = form.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
     submitBtn.disabled = true;
