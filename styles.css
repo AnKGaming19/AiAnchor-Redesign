@@ -187,8 +187,9 @@ section {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1rem 0;
+    position: relative;
 }
 
 .brand {
@@ -216,6 +217,7 @@ section {
     display: flex;
     list-style: none;
     gap: 2rem;
+    margin-left: 3rem;
 }
 
 .nav-link {
@@ -254,7 +256,8 @@ section {
     cursor: pointer;
     padding: 0.5rem;
     z-index: 1001;
-    position: relative;
+    position: absolute;
+    right: 0;
 }
 
 .mobile-menu-toggle span {
@@ -1117,7 +1120,8 @@ section {
     .mobile-menu-toggle {
         display: flex;
         z-index: 1001;
-        position: relative;
+        position: absolute;
+        right: 0;
     }
     
     .hero-content {
