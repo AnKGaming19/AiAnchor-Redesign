@@ -809,6 +809,7 @@ function setupSmartNavbar() {
     window.addEventListener('scroll', requestTick, { passive: true });
 }
 
+
 window.AIAnchor = {
     scrollToContact,
     scrollToResults,
