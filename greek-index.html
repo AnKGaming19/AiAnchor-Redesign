@@ -196,9 +196,9 @@
                 <nav class="nav" aria-label="Main navigation">
                     <ul class="nav-list">
                         <li><a href="#services" class="nav-link">Υπηρεσίες</a></li>
+                        <li><a href="#about" class="nav-link">Σχετικά</a></li>
                         <li><a href="#testimonials" class="nav-link">Αξιολογήσεις</a></li>
                         <li><a href="greek-form.html" class="nav-link">Δωρεάν Demo</a></li>
-                        <li><a href="#faq" class="nav-link">Συχνές Ερωτήσεις</a></li>
                         <li><a href="#contact" class="nav-link">Επικοινωνία</a></li>
                     </ul>
                 </nav>
@@ -980,6 +980,33 @@
             // Ensure all effects are initialized
             if (typeof initializeApp === 'function') {
                 initializeApp();
+            }
+            
+            // Initialize mobile menu specifically
+            console.log('Script loaded, checking for setupMobileMenu function...');
+            console.log('setupMobileMenu type:', typeof setupMobileMenu);
+            
+            if (typeof setupMobileMenu === 'function') {
+                setupMobileMenu();
+                console.log('Mobile menu initialized');
+            } else {
+                console.log('setupMobileMenu function not found, trying manual setup...');
+                
+                // Manual mobile menu setup as fallback
+                const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                const nav = document.querySelector('.nav');
+                
+                console.log('Mobile toggle found:', !!mobileToggle);
+                console.log('Nav found:', !!nav);
+                
+                if (mobileToggle && nav) {
+                    mobileToggle.addEventListener('click', function() {
+                        console.log('Mobile menu clicked!');
+                        const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+                        mobileToggle.setAttribute('aria-expanded', !isExpanded);
+                        nav.classList.toggle('nav-open');
+                    });
+                }
             }
         });
         
