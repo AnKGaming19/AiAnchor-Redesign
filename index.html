@@ -934,24 +934,12 @@
         function updateFloatingLanguageSelector() {
             const currentLang = localStorage.getItem('aianchor_language') || 'en';
             const languageSpan = document.getElementById('currentLanguage');
-            const flagIcon = document.getElementById('floatingFlagIcon');
             
             if (languageSpan) {
                 languageSpan.textContent = currentLang.toUpperCase();
             }
             
-            if (flagIcon) {
-                const img = flagIcon.querySelector('img');
-                if (img) {
-                    if (currentLang === 'el') {
-                        img.src = 'media/greece_round_icon_64.png';
-                        img.alt = 'Greek Flag';
-                    } else {
-                        img.src = 'media/united_kingdom_round_icon_64.png';
-                        img.alt = 'UK Flag';
-                    }
-                }
-            }
+            // Flag is static - always shows UK flag on English page
         }
         
         // Show language popup
