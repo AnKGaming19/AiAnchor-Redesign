@@ -2483,6 +2483,11 @@ textarea:focus {
     min-width: 2rem;
 }
 
+.flag-icon img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .language-info {
     display: flex;
     flex-direction: column;
