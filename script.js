@@ -34,18 +34,6 @@ function setupMobileMenu() {
         mobileToggle.setAttribute('aria-expanded', !isExpanded);
         nav.classList.toggle('nav-open');
         
-        // Toggle hamburger animation
-        const spans = mobileToggle.querySelectorAll('span');
-        if (!isExpanded) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
-        
         // Trap focus when menu is open
         if (!isExpanded) {
             trapFocus(nav);
