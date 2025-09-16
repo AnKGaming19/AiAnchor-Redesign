@@ -849,11 +849,13 @@
         </div>
     </footer>
 
-    <!-- Floating CTA -->
-    <a href="form.html" class="floating-cta" onclick="transitionToForm(event)" aria-label="Book a free strategy call">
-        <i class="fas fa-calendar-check"></i>
-        <span>Book Call</span>
-    </a>
+    <!-- Floating Language Selector -->
+    <button class="floating-cta" onclick="showLanguagePopup()" aria-label="Change language" id="floatingLanguageSelector">
+        <div class="flag-icon" id="floatingFlagIcon">
+            <img src="media/united_kingdom_round_icon_64.png" alt="UK Flag">
+        </div>
+        <span id="currentLanguage">EN</span>
+    </button>
 
     <!-- Alert Container -->
     <div id="alertContainer" class="alert-container" role="status" aria-live="polite"></div>
@@ -915,9 +917,41 @@
         function checkLanguagePreference() {
             console.log('Checking language preference...');
             
-            // Always show popup on main page load (remove session storage check)
-            // Add a small delay to ensure page is fully loaded
-            setTimeout(showLanguagePopup, 300);
+            // Update floating language selector
+            updateFloatingLanguageSelector();
+            
+            // Only show popup if user hasn't visited before (first time)
+            const hasVisited = sessionStorage.getItem('aianchor_visited');
+            if (!hasVisited) {
+                // Mark as visited
+                sessionStorage.setItem('aianchor_visited', 'true');
+                // Add a small delay to ensure page is fully loaded
+                setTimeout(showLanguagePopup, 300);
+            }
+        }
+        
+        // Update floating language selector display
+        function updateFloatingLanguageSelector() {
+            const currentLang = localStorage.getItem('aianchor_language') || 'en';
+            const languageSpan = document.getElementById('currentLanguage');
+            const flagIcon = document.getElementById('floatingFlagIcon');
+            
+            if (languageSpan) {
+                languageSpan.textContent = currentLang.toUpperCase();
+            }
+            
+            if (flagIcon) {
+                const img = flagIcon.querySelector('img');
+                if (img) {
+                    if (currentLang === 'el') {
+                        img.src = 'media/greece_round_icon_64.png';
+                        img.alt = 'Greek Flag';
+                    } else {
+                        img.src = 'media/united_kingdom_round_icon_64.png';
+                        img.alt = 'UK Flag';
+                    }
+                }
+            }
         }
         
         // Show language popup
@@ -950,6 +984,9 @@
             // Save language preference
             localStorage.setItem('aianchor_language', language);
             
+            // Update floating language selector
+            updateFloatingLanguageSelector();
+            
             // Hide popup
             hideLanguagePopup();
             
@@ -961,8 +998,7 @@
             } else {
                 console.log('Staying on English page');
                 // Stay on English version (current page)
-                // Clear session storage so popup shows again on next visit
-                sessionStorage.removeItem('aianchor_visited');
+                // Don't clear session storage - user has already made their choice
             }
         }
         

@@ -358,7 +358,7 @@
     <section class="services" id="services">
         <div class="container">
             <div class="section-header reveal">
-                <h2 class="section-title">Υπηρεσίες</h2>
+                <h2 class="section-title">Πώς Βοηθάμε</h2>
             </div>
             
             <div class="services-grid">
@@ -805,7 +805,7 @@
                     </div>
                     
                     <div class="form-note">
-                        <p>Με την υποβολή, συμφωνείτε να επικοινωνήσουμε μαζί σας για τις υπηρεσίες της AIAnchor.</p>
+                        <p>Με την υποβολή, συμφωνείτε να επικοινωνήσουμε μαζί σας για τις υπηρεσίες AIAnchor.</p>
                     </div>
                     
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
@@ -827,7 +827,7 @@
                         <i class="fas fa-anchor"></i>
                         <span>AIAnchor</span>
                     </a>
-                    <p>AI λύσεις αυτοματοποίησης που απογειώνουν την επιχείρησή σας</p>
+                    <p>AI λύσεις αυτοματοποίησης που κλιμακώνουν την επιχείρησή σας</p>
                 </div>
                 
                 <div class="footer-social">
@@ -849,11 +849,13 @@
         </div>
     </footer>
 
-    <!-- Floating CTA -->
-    <a href="greek-form.html" class="floating-cta" onclick="transitionToForm(event)" aria-label="Κλείστε δωρεάν συμβουλευτική">
-        <i class="fas fa-calendar-check"></i>
-        <span>Δωρεάν Demo</span>
-    </a>
+    <!-- Floating Language Selector -->
+    <button class="floating-cta" onclick="showLanguagePopup()" aria-label="Αλλαγή γλώσσας" id="floatingLanguageSelector">
+        <div class="flag-icon" id="floatingFlagIcon">
+            <img src="media/greece_round_icon_64.png" alt="Greek Flag">
+        </div>
+        <span id="currentLanguage">EL</span>
+    </button>
 
     <!-- Alert Container -->
     <div id="alertContainer" class="alert-container" role="status" aria-live="polite"></div>
@@ -880,8 +882,132 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
     
+    <!-- Language Selection Popup -->
+    <div id="languagePopup" class="language-popup" style="display: none;">
+        <div class="language-popup-overlay"></div>
+        <div class="language-popup-content">
+            <div class="language-popup-header">
+                <h3>Choose Your Language / Επιλέξτε τη Γλώσσα σας</h3>
+                <p>Select your preferred language for the best experience</p>
+            </div>
+            <div class="language-options">
+                <button class="language-option" data-lang="en" onclick="selectLanguage('en')">
+                    <div class="flag-icon"><img src="media/united_kingdom_round_icon_64.png" alt="UK Flag" width="32" height="32"></div>
+                    <div class="language-info">
+                        <span class="language-name">English</span>
+                        <span class="language-desc">Continue in English</span>
+                    </div>
+                </button>
+                <button class="language-option" data-lang="el" onclick="selectLanguage('el')">
+                    <div class="flag-icon"><img src="media/greece_round_icon_64.png" alt="Greek Flag" width="32" height="32"></div>
+                    <div class="language-info">
+                        <span class="language-name">Ελληνικά</span>
+                        <span class="language-desc">Συνέχεια στα Ελληνικά</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="script.js"></script>
+    
+    <!-- Language Selection Script -->
+    <script>
+        // Update floating language selector display
+        function updateFloatingLanguageSelector() {
+            const currentLang = localStorage.getItem('aianchor_language') || 'el';
+            const languageSpan = document.getElementById('currentLanguage');
+            const flagIcon = document.getElementById('floatingFlagIcon');
+            
+            if (languageSpan) {
+                languageSpan.textContent = currentLang.toUpperCase();
+            }
+            
+            if (flagIcon) {
+                const img = flagIcon.querySelector('img');
+                if (img) {
+                    if (currentLang === 'en') {
+                        img.src = 'media/united_kingdom_round_icon_64.png';
+                        img.alt = 'UK Flag';
+                    } else {
+                        img.src = 'media/greece_round_icon_64.png';
+                        img.alt = 'Greek Flag';
+                    }
+                }
+            }
+        }
+        
+        // Show language popup
+        function showLanguagePopup() {
+            console.log('Attempting to show language popup...');
+            const popup = document.getElementById('languagePopup');
+            if (popup) {
+                popup.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                console.log('Language popup shown');
+            } else {
+                console.error('Language popup element not found');
+            }
+        }
+        
+        // Hide language popup
+        function hideLanguagePopup() {
+            const popup = document.getElementById('languagePopup');
+            if (popup) {
+                popup.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Handle language selection
+        function selectLanguage(language) {
+            console.log('Language selected:', language);
+            
+            // Save language preference
+            localStorage.setItem('aianchor_language', language);
+            
+            // Update floating language selector
+            updateFloatingLanguageSelector();
+            
+            // Hide popup
+            hideLanguagePopup();
+            
+            // Redirect based on selection
+            if (language === 'en') {
+                console.log('Redirecting to English page...');
+                // Redirect to English version
+                window.location.href = 'index.html';
+            } else {
+                console.log('Staying on Greek page');
+                // Stay on Greek version (current page)
+            }
+        }
+        
+        // Initialize language selector when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFloatingLanguageSelector();
+            // Don't show popup automatically on Greek page - only when user clicks the floating button
+        });
+        
+        // Close popup when clicking overlay or pressing Escape
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('language-popup-overlay')) {
+                // Allow closing by clicking overlay - stay on current language
+                hideLanguagePopup();
+            }
+        });
+        
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const popup = document.getElementById('languagePopup');
+                if (popup && popup.style.display !== 'none') {
+                    hideLanguagePopup();
+                }
+            }
+        });
+    </script>
     
 </body>
 </html>
