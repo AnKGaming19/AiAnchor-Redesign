@@ -1,26 +1,22 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap
 Sitemap: https://aianchor.online/sitemap.xml
 
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
+# Disallow admin or private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
 
-# Allow all search engines to access all content
-Disallow:
-
-# Block access to sensitive files
-Disallow: /node_modules/
-Disallow: /package.json
-Disallow: /pnpm-lock.yaml
-Disallow: /process-form.php
-Disallow: /SETUP.md
-Disallow: /README.md
-
-# Allow access to media files
+# Allow all main content
+Allow: /index.html
+Allow: /greek-index.html
+Allow: /form.html
+Allow: /greek-form.html
+Allow: /form_clean.html
 Allow: /media/
+Allow: /legal/
 
-# Allow access to CSS and JS files
-Allow: /*.css
-Allow: /*.js
+# Crawl delay (optional)
+Crawl-delay: 1
