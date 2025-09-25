@@ -3,7 +3,7 @@ import './TestimonialsSection.css';
 
 const testimonials = [
   {
-    quote: "I tried a marketing agency for the first time ever with you guys and was expecting so much less and would've been ok with so less, but I can see that you guys put in the time to do great work and maintain a great relationship with the client you are working with.",
+    quote: "I tried an ai agency for the first time ever with you guys and was expecting so much less and would've been ok with so less, but I can see that you guys put in the time to do great work and maintain a great relationship with the client you are working with.",
     business: "Codename X"
   },
   {
