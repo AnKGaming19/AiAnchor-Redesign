@@ -205,6 +205,7 @@
                 <nav class="nav" aria-label="Main navigation">
                     <ul class="nav-list">
                         <li><a href="#services" class="nav-link">Υπηρεσίες</a></li>
+                        <li><a href="#about" class="nav-link">Σχετικά</a></li>
                         <li><a href="#testimonials" class="nav-link">Αξιολογήσεις</a></li>
                         <li><a href="greek-form.html" class="nav-link">Δωρεάν Demo</a></li>
                         <li><a href="#contact" class="nav-link">Επικοινωνία</a></li>
@@ -229,33 +230,29 @@
             <div class="orb orb-2"></div>
             <div class="orb orb-3"></div>
             <div class="grid-glow"></div>
+            <div class="mouse-gradient" id="mouseGradient"></div>
+            <div class="interactive-particles" id="interactiveParticles"></div>
         </div>
         
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-headline reveal">
-                        Η <span class="highlight-blue">Τεχνητή Νοημοσύνη</span> στην υπηρεσία της <span class="highlight-blue">επιχείρησής</span> σας.
+                    <h1 class="hero-headline" data-animate="fade-up" data-delay="0">
+                        Προσαρμοσμένες Λύσεις AI που μετατρέπουν την κίνηση σε κλεισμένες κλήσεις.
                     </h1>
-                    <p class="hero-subheadline reveal">
-                        Βοηθάμε επιχειρήσεις να αυτοματοποιούν, να βελτιστοποιούν και να αναπτύσσονται με λύσεις Τεχνητής Νοημοσύνης που αποδίδουν.
+                    <p class="hero-subheadline" data-animate="fade-up" data-delay="120">
+                        Χτίζουμε Προσαρμοσμένες Υποδομές AI που πιστοποιούν, ακολουθούν και μετατρέπουν.
                     </p>
-                    <div class="hero-ctas reveal">
+                    <div class="hero-ctas" data-animate="scale-in" data-delay="220">
                         <button class="cta-button hero-cta" onclick="scrollToContact()">
                             <i class="fas fa-calendar-check"></i>
-                            Κλείστε Δωρεάν Στρατηγική Κλήση
+                            Κλείστε Στρατηγική Κλήση
                         </button>
-                        <button class="cta-button hero-cta" id="roi-open" type="button">
-                            <i class="fas fa-calculator"></i>
-                            Υπολογίστε το ROI μου
-                        </button>
-                        
                     </div>
-                    <p class="hero-trust-note reveal">Τυπικοί πελάτες βλέπουν €10k+/μήνα σε ανακτημένα έσοδα για ~ €1k/μήνα.</p>
                 </div>
-                <div class="hero-image reveal">
+                <div class="hero-image" data-animate="fade-up" data-delay="100">
                     <div class="hero-card floating-phone">
-                        <img src="media/aianchor phone2.png" alt="AIAnchor phone app interface" loading="eager">
+                        <img src="media/aianchor phone2.png" alt="AIAnchor phone app interface" width="400" height="800" loading="eager">
                     </div>
                 </div>
             </div>
@@ -365,48 +362,125 @@
     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Υπηρεσίες</h2>
+            <div class="section-header" data-animate="fade-up">
+                <h2 class="section-title">Οι Υπηρεσίες μας</h2>
+                <h3 class="section-subtitle-large">Κάθε Σημείο Συμφόρησης Έχει μια Έξυπνη Λύση</h3>
+                <p class="section-subtitle">Η AIAnchor προσφέρει συμβουλευτικές υποδομές AI σχεδιασμένες γύρω από τις ακριβείς ροές εργασίας σας — όχι γενικές αυτοματοποιήσεις.</p>
             </div>
             
-            <div class="services-grid">
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <i class="fas fa-search"></i>
+            <div class="services-grid" data-stagger data-delay="0">
+                <div class="service-card" data-animate="fade-up">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-phone-slash"></i>
+                        </div>
+                        <h3>Χαμένοι Πιθανοί Πελάτες & Αργές Παρακολουθήσεις</h3>
                     </div>
-                    <h3>Ανάλυση</h3>
-                    <p>Ελέγχουμε τις διαδικασίες σας και βρίσκουμε ευκαιρίες για Τεχνητή Νοημοσύνη.</p>
-                    <ul class="service-features">
-                        <li>Ανάλυση & χαρτογράφηση διαδικασιών</li>
-                        <li>Αξιολόγηση ευκαιριών ROI</li>
-                        <li>Ανασκόπηση τεχνικής σκοπιμότητας</li>
-                    </ul>
+                    <div class="service-content">
+                        <div class="service-block service-block-problem">
+                            <div class="service-block-header">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="service-block-label">Πρόβλημα</span>
+                            </div>
+                            <p>Οι πιθανοί πελάτες μένουν χωρίς απάντηση, οι ευκαιρίες χάνονται και ο αγωγός σας επιβραδύνεται.</p>
+                        </div>
+                        <div class="service-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="service-block service-block-solution">
+                            <div class="service-block-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <span class="service-block-label">Λύση</span>
+                            </div>
+                            <p>Συστήματα AI Υποδοχής & Προγραμματισμού που απαντούν άμεσα, πιστοποιούν πιθανούς πελάτες και κλείνουν κλήσεις ενώ εσείς εστιάζετε στο κλείσιμο.</p>
+                        </div>
+                        <div class="service-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="service-block service-block-result">
+                            <div class="service-block-header">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="service-block-label">Αποτέλεσμα</span>
+                            </div>
+                            <p>Ταχύτεροι χρόνοι απόκρισης, υψηλότερη μετατροπή πιθανών πελατών και συνεπείς εμπειρίες πελατών.</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <i class="fas fa-robot"></i>
+                <div class="service-card" data-animate="fade-up">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>Επαναλαμβανόμενη Διοίκηση & Αναποτελεσματικές Παραδόσεις</h3>
                     </div>
-                    <h3>Αυτοματοποίηση</h3>
-                    <p>Εγκαθιστούμε εργαλεία που εξοικονομούν χρόνο και μειώνουν λάθη.</p>
-                    <ul class="service-features">
-                        <li>Ανάπτυξη προσαρμοσμένου AI bot</li>
-                        <li>Ενσωματώσεις API & webhooks</li>
-                        <li>Αυτοματοποίηση πολλαπλών πλατφορμών</li>
-                    </ul>
+                    <div class="service-content">
+                        <div class="service-block service-block-problem">
+                            <div class="service-block-header">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="service-block-label">Πρόβλημα</span>
+                            </div>
+                            <p>Η ομάδα σας ξοδεύει ώρες σε εργασίες που θα έπρεπε να τρέχουν αυτόματα.</p>
+                        </div>
+                        <div class="service-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="service-block service-block-solution">
+                            <div class="service-block-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <span class="service-block-label">Λύση</span>
+                            </div>
+                            <p>Προσαρμοσμένη αυτοματοποίηση διαδικασιών που συνδέει CRMs, φόρμες, emails και πίνακες ελέγχου σε πραγματικό χρόνο.</p>
+                        </div>
+                        <div class="service-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="service-block service-block-result">
+                            <div class="service-block-header">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="service-block-label">Αποτέλεσμα</span>
+                            </div>
+                            <p>30–50% του χρόνου της ομάδας σας ανακτάται, έτοιμο να επανεπενδυθεί σε στρατηγική και ανάπτυξη.</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <i class="fas fa-rocket"></i>
+                <div class="service-card" data-animate="fade-up">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Έλλειψη Λειτουργικής Ορατότητας</h3>
                     </div>
-                    <h3>Κλιμάκωση</h3>
-                    <p>Αυξάνουμε έσοδα ενώ η ΤΝ αναλαμβάνει τις επαναλαμβανόμενες εργασίες.</p>
-                    <ul class="service-features">
-                        <li>Εκπαίδευση & ενσωμάτωση ομάδας</li>
-                        <li>Παρακολούθηση απόδοσης</li>
-                        <li>Συνεχής βελτιστοποίηση</li>
-                    </ul>
+                    <div class="service-content">
+                        <div class="service-block service-block-problem">
+                            <div class="service-block-header">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="service-block-label">Πρόβλημα</span>
+                            </div>
+                            <p>Δεν μπορείτε να κλιμακώσετε αυτό που δεν μπορείτε να δείτε.</p>
+                        </div>
+                        <div class="service-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="service-block service-block-solution">
+                            <div class="service-block-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <span class="service-block-label">Λύση</span>
+                            </div>
+                            <p>Πίνακες ελέγχου και αναλυτικά με AI που σας δίνουν σαφήνεια σε όλα τα τμήματα και KPIs.</p>
+                        </div>
+                        <div class="service-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="service-block service-block-result">
+                            <div class="service-block-header">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="service-block-label">Αποτέλεσμα</span>
+                            </div>
+                            <p>Λήψη αποφάσεων βασισμένη σε δεδομένα, λιγότερα λάθη και προβλέψιμα μοτίβα ανάπτυξης.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -420,60 +494,116 @@
     <!-- Process Section -->
     <section class="process" id="process">
         <div class="container">
-            <div class="section-header reveal">
+            <div class="section-header" data-animate="fade-up">
                 <h2 class="section-title">Η Διαδικασία μας</h2>
-                <p class="section-subtitle">Απλή, αποδεδειγμένη προσέγγιση για επιτυχία AI αυτοματοποίησης</p>
+                <h3 class="section-subtitle-large">Από την Έρευνα στην Ανάπτυξη. Γίνεται Μαζί σας, Όχι για σας.</h3>
+                <p class="section-subtitle">Το πλαίσιο συμβουλευτικής B2B μας διασφαλίζει ότι η ανάπτυξη αυτοματοποίησής σας είναι ακριβής, μετρήσιμη και ευθυγραμμισμένη με τους επιχειρηματικούς στόχους.</p>
             </div>
             
-            <div class="process-steps">
-                <div class="process-step reveal">
-                    <div class="step-number">1</div>
-                    <h3>Έρευνα</h3>
-                    <p>Αναλύουμε τις τρέχουσες διαδικασίες σας και εντοπίζουμε ευκαιρίες αυτοματοποίησης.</p>
-                    <div class="step-details">
-                        <div class="deliverable">
-                            <strong>Παραδοτέα:</strong> Έλεγχος διαδικασιών, οδικός χάρτης αυτοματοποίησης, προβλέψεις ROI
+            <div class="process-steps-wrapper">
+                <div class="process-steps" data-stagger data-delay="0">
+                    <div class="process-step" data-animate="fade-up">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
                         </div>
-                        <div class="timeline">
-                            <strong>Χρονοδιάγραμμα:</strong> 2-3 ημέρες
+                        <div class="step-content">
+                            <h3>Έρευνα</h3>
+                            <p>Αναλύουμε τις λειτουργίες σας και χαρτογραφούμε τις αναποτελεσματικότητες, εντοπίζοντας τις περιπτώσεις χρήσης με το υψηλότερο ROI για αυτοματοποίηση.</p>
+                            <div class="step-details">
+                                <div class="detail-block detail-deliverable">
+                                    <div class="detail-header">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        <strong>Παραδοτέα</strong>
+                                    </div>
+                                    <p>Χάρτης διαδικασίας, οδικός χάρτης αυτοματοποίησης, πρόβλεψη ROI.</p>
+                                </div>
+                                <div class="detail-block detail-timeline">
+                                    <div class="detail-header">
+                                        <i class="fas fa-clock"></i>
+                                        <strong>Χρονοδιάγραμμα</strong>
+                                    </div>
+                                    <p>2-3 ημέρες</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-connector" data-animate="slide-right" data-delay="100">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    
+                    <div class="process-step" data-animate="fade-up">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Ξεκίνημα</h3>
+                            <p>Χτίζουμε ένα εστιασμένο πιλοτικό πρόγραμμα αυτοματοποίησης για να επικυρώσουμε την απόδοση και να επιδείξουμε μετρήσιμα αποτελέσματα.</p>
+                            <div class="step-details">
+                                <div class="detail-block detail-deliverable">
+                                    <div class="detail-header">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        <strong>Παραδοτέα</strong>
+                                    </div>
+                                    <p>Λειτουργικό σύστημα AI, πίνακας ελέγχου KPI, γνώσεις βελτιστοποίησης.</p>
+                                </div>
+                                <div class="detail-block detail-timeline">
+                                    <div class="detail-header">
+                                        <i class="fas fa-clock"></i>
+                                        <strong>Χρονοδιάγραμμα</strong>
+                                    </div>
+                                    <p>7-14 ημέρες</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="process-connector" data-animate="slide-right" data-delay="200">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    
+                    <div class="process-step" data-animate="fade-up">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="step-content">
+                            <h3>Κλιμάκωση & Συντήρηση</h3>
+                            <p>Μόλις επικυρωθεί, κλιμακώνουμε την υποδομή σας σε όλα τα τμήματα με πλήρη υποστήριξη και βελτιστοποίηση.</p>
+                            <div class="step-details">
+                                <div class="detail-block detail-deliverable">
+                                    <div class="detail-header">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        <strong>Παραδοτέα</strong>
+                                    </div>
+                                    <p>Επιχειρηματική ανάπτυξη, εκπαίδευση, συνεχής βελτίωση.</p>
+                                </div>
+                                <div class="detail-block detail-timeline">
+                                    <div class="detail-header">
+                                        <i class="fas fa-clock"></i>
+                                        <strong>Χρονοδιάγραμμα</strong>
+                                    </div>
+                                    <p>2-4 εβδομάδες</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="process-step reveal">
-                    <div class="step-number">2</div>
-                    <h3>Ξεκίνημα</h3>
-                    <p>Χτίζουμε και αναπτύσσουμε μια εστιασμένη αυτοματοποίηση για να επικυρώσουμε την προσέγγιση.</p>
-                    <div class="step-details">
-                        <div class="deliverable">
-                            <strong>Παραδοτέα:</strong> Λειτουργικό σύστημα AI, μετρικές απόδοσης, σχέδιο βελτιστοποίησης
-                        </div>
-                        <div class="timeline">
-                            <strong>Χρονοδιάγραμμα:</strong> 7-14 ημέρες
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="process-step reveal">
-                    <div class="step-number">3</div>
-                    <h3>Κλιμάκωση & Συντήρηση</h3>
-                    <p>Επεκτείνουμε τις επιτυχημένες αυτοματοποιήσεις και παρέχουμε συνεχή βελτιστοποίηση.</p>
-                    <div class="step-details">
-                        <div class="deliverable">
-                            <strong>Παραδοτέα:</strong> Πλήρες σύνολο αυτοματοποίησης, εκπαίδευση ομάδας, συνεχής υποστήριξη
-                        </div>
-                        <div class="timeline">
-                            <strong>Χρονοδιάγραμμα:</strong> 2-4 εβδομάδες
-                        </div>
-                </div>
-                </div>
             </div>
             
-            <div class="process-proof reveal">
-                <p><strong>Μέσος χρόνος λειτουργίας: 14 ημέρες • 29% λιγότερες χαμένες κλήσεις μετά το Ξεκίνημα</strong></p>
+            <div class="process-proof" data-animate="fade-up" data-delay="200">
+                <p><strong>Μέσος χρόνος λειτουργίας: 14 ημέρες. Οι πελάτες βιώνουν 25-40% ταχύτερη απόκριση πιθανών πελατών και μετρήσιμο ROI εντός του πρώτου μήνα.</strong></p>
             </div>
             
-            <div class="process-cta reveal">
+            <div class="process-cta" data-animate="scale-in" data-delay="300">
                 <button class="cta-button" onclick="scrollToContact()">Λάβετε το Σχέδιο Αυτοματοποίησής σας</button>
             </div>
         </div>
@@ -481,35 +611,97 @@
 
     <!-- AI Receptionist Section -->
     <section id="ai-receptionist" class="ai-receptionist">
-        <div class="container">
-        <h2 class="section-title reveal">Γνωρίστε τον 24/7 AI Υποδοχέα σας</h2>
-        <p class="ai-receptionist-subtitle reveal">
-          Μην χάσετε ποτέ ξανά κλήση, κράτηση ή ευκαιρία πελάτη. Ο AI Υποδοχέας μας
-          χειρίζεται προγραμματισμό, ερωτήσεις και παρακολούθηση — ώστε να μπορείτε να εστιάσετε στην ανάπτυξη της επιχείρησής σας.
-        </p>
-
-        <div class="ai-receptionist-grid">
-          <div class="ai-feature reveal">
-            <i class="fas fa-phone-volume"></i>
-            <h3>Πάντα Διαθέσιμος</h3>
-            <p>Απαντά σε κλήσεις και μηνύματα πελατών 24/7 — χωρίς διαλείμματα, χωρίς χαμένες ευκαιρίες.</p>
-          </div>
-          <div class="ai-feature reveal">
-            <i class="fas fa-calendar-check"></i>
-            <h3>Έξυπνος Προγραμματισμός</h3>
-            <p>Κλείνει ραντεβού, διαχειρίζεται ημερολόγια και αποφεύγει διπλές κρατήσεις.</p>
-          </div>
-          <div class="ai-feature reveal">
-            <i class="fas fa-comments"></i>
-            <h3>Φυσικές Συνομιλίες</h3>
-            <p>Καταλαβαίνει τα αιτήματα των πελατών και απαντά σαν πραγματικός ανθρώπινος βοηθός.</p>
-          </div>
-          
+      <div class="container">
+        <div class="section-header" data-animate="fade-up">
+          <h2 class="section-title">Φωνητικός Πράκτορας / AI Υποδοχέας</h2>
+          <p class="section-subtitle">AI υποδοχέας με προ-πιστοποίηση σε κλίμακα.</p>
         </div>
 
-          <div class="ai-receptionist-cta reveal">
-            <a href="greek-form.html" class="cta-button" onclick="transitionToForm(event)">Αίτηση Δωρεάν Demo</a>
+        <div class="ai-receptionist-features-grid" data-stagger data-delay="0">
+          <div class="ai-feature-card" data-animate="fade-up">
+            <div class="ai-feature-icon">
+              <i class="fas fa-phone-volume"></i>
             </div>
+            <h3>Άμεση Λήψη Κλήσης</h3>
+            <p>Παίρνει χαμένες κλήσεις άμεσα, διασφαλίζοντας κανένας πιθανός πελάτης να μην μείνει χωρίς απάντηση.</p>
+          </div>
+
+          <div class="ai-feature-card" data-animate="fade-up">
+            <div class="ai-feature-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <h3>Έξυπνη Έρευνα</h3>
+            <p>Κάνει ερωτήσεις έρευνας αυτόματα για να κατανοήσει τις ανάγκες των πελατών.</p>
+          </div>
+
+          <div class="ai-feature-card" data-animate="fade-up">
+            <div class="ai-feature-icon">
+              <i class="fas fa-filter"></i>
+            </div>
+            <h3>Πιστοποίηση Πιθανών Πελατών</h3>
+            <p>Πιστοποιεί πιθανούς πελάτες ως Α/Β/Γ προτεραιότητα για αποτελεσματική δρομολόγηση.</p>
+          </div>
+
+          <div class="ai-feature-card" data-animate="fade-up">
+            <div class="ai-feature-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Έξυπνος Προγραμματισμός</h3>
+            <p>Κλείνει ραντεβού ή δρομολογεί σε μέλη της ομάδας απρόσκοπτα.</p>
+          </div>
+        </div>
+
+        <div class="ai-receptionist-stack-card" data-animate="fade-up" data-delay="200">
+          <div class="stack-header">
+            <i class="fas fa-plug"></i>
+            <h3>Λειτουργεί με την στοίβα σας</h3>
+          </div>
+          <div class="stack-icons-grid">
+            <div class="stack-icon-item" data-animate="scale-in" data-delay="0">
+              <div class="stack-icon">
+                <i class="fas fa-table"></i>
+              </div>
+              <span>Airtable</span>
+            </div>
+            <div class="stack-icon-item" data-animate="scale-in" data-delay="50">
+              <div class="stack-icon">
+                <i class="fab fa-google"></i>
+              </div>
+              <span>Google Sheets</span>
+            </div>
+            <div class="stack-icon-item" data-animate="scale-in" data-delay="100">
+              <div class="stack-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              <span>Google Calendar</span>
+            </div>
+            <div class="stack-icon-item" data-animate="scale-in" data-delay="150">
+              <div class="stack-icon">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <span>Cal.com</span>
+            </div>
+            <div class="stack-icon-item" data-animate="scale-in" data-delay="200">
+              <div class="stack-icon">
+                <i class="fab fa-microsoft"></i>
+              </div>
+              <span>Outlook</span>
+            </div>
+            <div class="stack-icon-item" data-animate="scale-in" data-delay="250">
+              <div class="stack-icon">
+                <i class="fab fa-hubspot"></i>
+              </div>
+              <span>HubSpot</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-receptionist-outcome" data-animate="fade-up" data-delay="300">
+          <div class="outcome-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <p>Μην χάσετε ποτέ πιθανό πελάτη. Διαθεσιμότητα 24/7. Άμεση πιστοποίηση.</p>
+        </div>
       </div>
     </section>
 
@@ -517,13 +709,13 @@
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="container">
-            <div class="section-header reveal">
+            <div class="section-header" data-animate="fade-up">
                 <h2 class="section-title">Τι λένε οι πελάτες μας</h2>
                 <p class="section-subtitle">Αυθεντικά σχόλια από συνεργασίες που έφεραν αποτέλεσμα</p>
             </div>
             
-            <div class="testimonials-grid">
-                <div class="testimonial-card reveal">
+            <div class="testimonials-grid" data-stagger data-delay="0">
+                <div class="testimonial-card" data-animate="fade-up">
                     <div class="testimonial-content">
                         <p>"Είναι η πρώτη φορά που συνεργάζομαι με agency και περίμενα πολύ λιγότερα — θα μου αρκούσαν. Τελικά βλέπω ότι αφιερώνετε τον χρόνο για πραγματικά ποιοτική δουλειά και κρατάτε εξαιρετική σχέση με τον πελάτη που εξυπηρετείτε."</p>
                     </div>
@@ -540,7 +732,7 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card reveal">
+                <div class="testimonial-card" data-animate="fade-up">
                     <div class="testimonial-content">
                         <p>"Ήσασταν υπέροχοι στη συνεργασία — εκτιμώ την προσπάθεια που καταβάλλετε για να βοηθήσετε το brand μου."</p>
                     </div>
@@ -557,7 +749,7 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card reveal">
+                <div class="testimonial-card" data-animate="fade-up">
                     <div class="testimonial-content">
                         <p>"Η συνεργασία με την AIAnchor ήταν ομαλή και ευχάριστη. Η ομάδα τους είναι όχι μόνο γνώστες και επαγγελματίες, αλλά και φιλικοί και άμεσοι. Πάντα διαθέσιμοι να απαντούν σε ερωτήσεις, ανησυχίες και ιδέες μου άμεσα, κάνοντάς με να νιώθω πραγματικά σημαντικός ως πελάτης."</p>
                     </div>
@@ -678,13 +870,13 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <div class="section-header reverse-reveal">
+            <div class="section-header" data-animate="fade-up">
             <h2 class="section-title">Κλείστε τη Δωρεάν Στρατηγική Κλήση</h2>
                 <p class="section-subtitle">Ξεκινήστε σήμερα με αυτοματοποίηση. Διαθέσιμες λίγες θέσεις κάθε εβδομάδα.</p>
             </div>
             
             <div class="contact-content">
-                <div class="contact-info reverse-reveal">
+                <div class="contact-info" data-animate="fade-up" data-delay="100">
                     <h3>Γιατί να κλείσετε κλήση;</h3>
                     <ul class="contact-benefits">
                         <li><i class="fas fa-check"></i> Εξατομικευμένη στρατηγική ΤΝ για την επιχείρησή σας</li>
@@ -694,7 +886,7 @@
                     </ul>
                 </div>
                 
-                <form class="contact-form reverse-reveal" id="contactForm" action="https://formspree.io/f/xgvlrqkj" method="POST">
+                <form class="contact-form" data-animate="fade-up" data-delay="200" id="contactForm" action="https://formspree.io/f/xgvlrqkj" method="POST">
                     <div class="form-group">
                         <label for="name">Ονοματεπώνυμο *</label>
                         <input type="text" id="name" name="name" required>

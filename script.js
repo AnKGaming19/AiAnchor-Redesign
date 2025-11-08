@@ -17,6 +17,7 @@ function initializeApp() {
     setupImageModal();
     setupRefreshScrollToTop();
     setupSmartNavbar();
+    setupInteractiveBackground();
 }
 
 // ===== MOBILE MENU =====
@@ -822,5 +823,138 @@ window.AIAnchor = {
     closeImageModal,
     toggleFAQ
 };
+
+// ===== INTERACTIVE BACKGROUND =====
+function setupInteractiveBackground() {
+    const hero = document.querySelector('.hero');
+    const mouseGradient = document.getElementById('mouseGradient');
+    const particlesContainer = document.getElementById('interactiveParticles');
+    
+    if (!hero || !mouseGradient || !particlesContainer) return;
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let isMouseMoving = false;
+    let mouseMoveTimeout;
+    const particlePool = [];
+    const maxParticles = 20;
+    
+    // Create particle pool
+    for (let i = 0; i < maxParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particlesContainer.appendChild(particle);
+        particlePool.push(particle);
+    }
+    
+    // Throttle function for performance
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+    
+    // Update mouse gradient position
+    function updateMouseGradient(e) {
+        const rect = hero.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+        
+        mouseGradient.style.left = mouseX + 'px';
+        mouseGradient.style.top = mouseY + 'px';
+        mouseGradient.classList.add('active');
+        
+        isMouseMoving = true;
+        clearTimeout(mouseMoveTimeout);
+        mouseMoveTimeout = setTimeout(() => {
+            isMouseMoving = false;
+            mouseGradient.classList.remove('active');
+        }, 1000);
+    }
+    
+    // Create particle on click
+    function createParticle(e) {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Find available particle
+        const particle = particlePool.find(p => !p.classList.contains('active'));
+        if (!particle) return;
+        
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.classList.add('active');
+        
+        // Remove active class after animation
+        setTimeout(() => {
+            particle.classList.remove('active');
+        }, 1000);
+    }
+    
+    // Throttled mouse move handler
+    const throttledMouseMove = throttle(updateMouseGradient, 16); // ~60fps
+    
+    // Event listeners
+    hero.addEventListener('mousemove', throttledMouseMove);
+    hero.addEventListener('click', createParticle);
+    
+    // Clean up on mouse leave
+    hero.addEventListener('mouseleave', () => {
+        mouseGradient.classList.remove('active');
+        isMouseMoving = false;
+    });
+}
+
+// ===== ANIMATION SYSTEM =====
+// Motion gating
+(function(){
+    const root = document.documentElement;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!media.matches) {
+        root.classList.add('motion-safe');
+    }
+})();
+
+// Intersection Observer for entrances
+(function(){
+    const root = document.documentElement;
+    if (!root.classList.contains('motion-safe')) return;
+
+    const els = Array.from(document.querySelectorAll('[data-animate]'));
+    if (!els.length) return;
+
+    // Stagger children
+    document.querySelectorAll('[data-stagger]').forEach(group => {
+        const items = Array.from(group.children);
+        items.forEach((item, i) => {
+            const delay = parseInt(group.getAttribute('data-delay') || '0', 10);
+            const step = parseInt(getComputedStyle(item).getPropertyValue('--stagger-step') || '70', 10);
+            item.style.setProperty('--child-delay', `${delay + i * step}ms`);
+        });
+    });
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const baseDelay = parseInt(el.getAttribute('data-delay') || '0', 10);
+                // Respect any inline transition-delay
+                el.style.transitionDelay = `${baseDelay}ms`;
+                el.classList.add('is-inview');
+                io.unobserve(el);
+            }
+        });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+    els.forEach(el => io.observe(el));
+})();
 
 
